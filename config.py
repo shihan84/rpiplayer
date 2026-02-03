@@ -3,7 +3,7 @@ import os
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'rpi-player-secret-key'
     HOST = '0.0.0.0'
-    PORT = 5000
+    PORT = 5005
     DEBUG = False
     
     # FFmpeg settings

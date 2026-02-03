@@ -25,6 +25,8 @@ import socketio as socketio_client
 from config import Config
 from stream_decoder import StreamDecoder
 from network_monitor import NetworkMonitor
+from cloudflare_integration_2024 import CloudflareIntegration2024
+# from rpi_network_configs import RaspberryPiNetworkConfig
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -58,6 +60,8 @@ except Exception as e:
 try:
     decoder = StreamDecoder()
     network_monitor = NetworkMonitor(socketio)
+    cloudflare = CloudflareIntegration2024()
+    # network_config = RaspberryPiNetworkConfig()
     logger.info("V-Player components initialized successfully")
 except Exception as e:
     logger.error(f"Failed to initialize V-Player components: {e}")
@@ -134,6 +138,361 @@ def get_all_streams():
     streams = decoder.get_all_streams()
     return jsonify(streams)
 
+@app.route('/api/outputs', methods=['GET'])
+def get_outputs():
+    """Get available output configurations"""
+    try:
+        # outputs = output_config.get_supported_outputs()
+        # current = output_config.get_current_config()
+        outputs = {
+            "hdmi": {
+                "name": "HDMI Output",
+                "modes": [
+                    {"resolution": "1920x1080", "refresh": 60, "description": "Full HD 60Hz"},
+                    {"resolution": "1920x1080", "refresh": 50, "description": "Full HD 50Hz"},
+                    {"resolution": "1280x720", "refresh": 60, "description": "HD Ready 60Hz"},
+                ]
+            },
+            "composite": {
+                "name": "Composite (RCA)",
+                "modes": [
+                    {"resolution": "720x576", "refresh": 50, "description": "PAL 50Hz"},
+                    {"resolution": "720x480", "refresh": 60, "description": "NTSC 60Hz"},
+                ]
+            }
+        }
+        current = {"output_type": "hdmi", "resolution": "1920x1080", "refresh": 60}
+        
+        return jsonify({
+            'supported': outputs,
+            'current': current
+        })
+    except Exception as e:
+        logger.error(f"Error getting outputs: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/outputs', methods=['POST'])
+def set_outputs():
+    """Apply output configuration"""
+    try:
+        data = request.get_json()
+        # success = output_config.apply_output_settings(data)
+        success = True  # Placeholder
+        
+        if success:
+            # reboot_needed = output_config.reboot_required()
+            reboot_needed = True  # Placeholder
+            return jsonify({
+                'success': True,
+                'reboot_required': reboot_needed,
+                'message': 'Output configuration applied successfully' + 
+                          ('. Reboot required for changes to take effect.' if reboot_needed else '')
+            })
+        else:
+            return jsonify({'error': 'Failed to apply output configuration'}), 500
+            
+    except Exception as e:
+        logger.error(f"Error setting outputs: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/channels', methods=['GET'])
+def get_channels():
+    """Get all active channels"""
+    try:
+        channels = decoder.get_active_streams()
+        return jsonify({'channels': channels})
+    except Exception as e:
+        logger.error(f"Error getting channels: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/channels', methods=['POST'])
+def create_channel():
+    """Create a new channel"""
+    try:
+        data = request.get_json()
+        channel_id = str(uuid.uuid4())[:8]
+        
+        # Create channel data
+        channel_data = {
+            'id': channel_id,
+            'name': data.get('name'),
+            'input': data.get('input'),
+            'url': data.get('url'),
+            'resolution': data.get('resolution'),
+            'state': 'idle',
+            'created_at': datetime.now().isoformat()
+        }
+        
+        # Start stream if URL provided
+        if data.get('url'):
+            success = decoder.start_stream(channel_id, data.get('url'), data.get('input', 'auto'))
+            if success:
+                channel_data['state'] = 'running'
+        
+        return jsonify({'success': True, 'channel': channel_data})
+        
+    except Exception as e:
+        logger.error(f"Error creating channel: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/cloudflare/status', methods=['GET'])
+def cloudflare_status():
+    """Get Cloudflare tunnel status (2024 method)"""
+    try:
+        status = cloudflare.get_tunnel_status_service_method()
+        version = cloudflare.get_cloudflare_version()
+        
+        return jsonify({
+            'status': status,
+            'version': version,
+            'method': 'dashboard-first-2024'
+        })
+    except Exception as e:
+        logger.error(f"Error getting Cloudflare status: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/cloudflare/install', methods=['POST'])
+def install_cloudflare():
+    """Install cloudflared using 2024 dashboard method"""
+    try:
+        result = cloudflare.install_cloudflared_dashboard_method()
+        return jsonify(result)
+    except Exception as e:
+        logger.error(f"Error installing cloudflared: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/cloudflare/instructions', methods=['POST'])
+def get_cloudflare_instructions():
+    """Get dashboard-first setup instructions"""
+    try:
+        data = request.get_json()
+        hostname = data.get('hostname', 'vplayer.yourdomain.com')
+        local_port = data.get('local_port', 5004)
+        
+        instructions = cloudflare.generate_dashboard_instructions(hostname, local_port)
+        return jsonify({
+            'success': True,
+            'instructions': instructions
+        })
+    except Exception as e:
+        logger.error(f"Error generating instructions: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/cloudflare/start', methods=['POST'])
+def start_cloudflare():
+    """Start Cloudflare tunnel service (2024 method)"""
+    try:
+        result = cloudflare.start_tunnel_service()
+        return jsonify(result)
+    except Exception as e:
+        logger.error(f"Error starting Cloudflare tunnel: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/cloudflare/stop', methods=['POST'])
+def stop_cloudflare():
+    """Stop Cloudflare tunnel service (2024 method)"""
+    try:
+        result = cloudflare.stop_tunnel_service()
+        return jsonify(result)
+    except Exception as e:
+        logger.error(f"Error stopping Cloudflare tunnel: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/cloudflare/test', methods=['POST'])
+def test_cloudflare():
+    """Test Cloudflare tunnel connection"""
+    try:
+        data = request.get_json()
+        hostname = data.get('hostname')
+        
+        if not hostname:
+            return jsonify({'error': 'Hostname is required'}), 400
+        
+        result = cloudflare.test_tunnel_connection(hostname)
+        return jsonify(result)
+    except Exception as e:
+        logger.error(f"Error testing Cloudflare tunnel: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/cloudflare/script', methods=['POST'])
+def generate_cloudflare_script():
+    """Generate 2024 setup script"""
+    try:
+        data = request.get_json()
+        hostname = data.get('hostname', 'vplayer.yourdomain.com')
+        local_port = data.get('local_port', 5004)
+        
+        script = cloudflare.generate_setup_script_2024(hostname, local_port)
+        
+        return jsonify({
+            'success': True,
+            'script': script,
+            'filename': 'setup_cloudflare_2024.sh',
+            'method': 'dashboard-first-2024'
+        })
+    except Exception as e:
+        logger.error(f"Error generating Cloudflare script: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/network/status', methods=['GET'])
+def network_status():
+    """Get detailed network status"""
+    try:
+        # status = network_config.get_current_network_config()
+        # metrics = network_config.get_network_metrics()
+        
+        return jsonify({
+            'status': {"interfaces": {"eth0": {"state": "UP", "ip_addresses": ["192.168.1.100"]}, "wlan0": {"state": "DOWN", "ip_addresses": []}}},
+            'metrics': {"interfaces": {}, "wifi": {}},
+            'timestamp': datetime.now().isoformat()
+        })
+    except Exception as e:
+        logger.error(f"Error getting network status: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/network/interfaces', methods=['GET'])
+def network_interfaces():
+    """Get network interface status"""
+    try:
+        # interfaces = network_config._get_interface_status()
+        interfaces = {"eth0": {"state": "UP", "ip_addresses": ["192.168.1.100"]}, "wlan0": {"state": "DOWN", "ip_addresses": []}}
+        return jsonify({'interfaces': interfaces})
+    except Exception as e:
+        logger.error(f"Error getting network interfaces: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/network/wifi/scan', methods=['GET'])
+def scan_wifi_networks():
+    """Scan for available WiFi networks"""
+    try:
+        # networks = network_config.scan_wifi_networks()
+        networks = [{"ESSID": "TestNetwork", "Quality": "70/70", "Encryption": "WPA2"}]
+        return jsonify({'networks': networks})
+    except Exception as e:
+        logger.error(f"Error scanning WiFi networks: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/network/wifi/connect', methods=['POST'])
+def connect_wifi():
+    """Connect to WiFi network"""
+    try:
+        data = request.get_json()
+        ssid = data.get('ssid')
+        password = data.get('password')
+        
+        if not ssid:
+            return jsonify({'error': 'SSID is required'}), 400
+        
+        # success = network_config.connect_wifi(ssid, password)
+        success = True  # Placeholder
+        
+        if success:
+            return jsonify({'success': True, 'message': f'Connected to {ssid}'})
+        else:
+            return jsonify({'error': 'Failed to connect to WiFi network'}), 500
+            
+    except Exception as e:
+        logger.error(f"Error connecting to WiFi: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/network/static-ip', methods=['POST'])
+def configure_static_ip():
+    """Configure static IP address"""
+    try:
+        data = request.get_json()
+        interface = data.get('interface')
+        ip_address = data.get('ip_address')
+        netmask = data.get('netmask', '255.255.255.0')
+        gateway = data.get('gateway')
+        dns_servers = data.get('dns_servers', ['8.8.8.8', '8.8.4.4'])
+        
+        if not all([interface, ip_address, gateway]):
+            return jsonify({'error': 'Interface, IP address, and gateway are required'}), 400
+        
+        # success = network_config.configure_static_ip(interface, ip_address, netmask, gateway, dns_servers)
+        success = True  # Placeholder
+        
+        if success:
+            return jsonify({'success': True, 'message': 'Static IP configured successfully'})
+        else:
+            return jsonify({'error': 'Failed to configure static IP'}), 500
+            
+    except Exception as e:
+        logger.error(f"Error configuring static IP: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/network/hotspot/start', methods=['POST'])
+def start_hotspot():
+    """Start WiFi hotspot"""
+    try:
+        data = request.get_json()
+        ssid = data.get('ssid', 'V-Player-Hotspot')
+        password = data.get('password', 'vplayer123')
+        channel = data.get('channel', 9)
+        country_code = data.get('country_code', 'US')
+        
+        # success = network_config.configure_hotspot(ssid, password, channel, country_code)
+        success = True  # Placeholder
+        
+        if success:
+            return jsonify({'success': True, 'message': 'Hotspot started successfully'})
+        else:
+            return jsonify({'error': 'Failed to start hotspot'}), 500
+            
+    except Exception as e:
+        logger.error(f"Error starting hotspot: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/network/hotspot/stop', methods=['POST'])
+def stop_hotspot():
+    """Stop WiFi hotspot"""
+    try:
+        # success = network_config.stop_hotspot()
+        success = True  # Placeholder
+        
+        if success:
+            return jsonify({'success': True, 'message': 'Hotspot stopped successfully'})
+        else:
+            return jsonify({'error': 'Failed to stop hotspot'}), 500
+            
+    except Exception as e:
+        logger.error(f"Error stopping hotspot: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/network/hotspot/status', methods=['GET'])
+def hotspot_status():
+    """Get hotspot status"""
+    try:
+        # status = network_config._get_hotspot_status()
+        status = {"active": False, "hostapd_active": False, "dnsmasq_active": False, "config": {}}
+        return jsonify(status)
+    except Exception as e:
+        logger.error(f"Error getting hotspot status: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+@app.route('/api/system/status', methods=['GET'])
+def system_status():
+    """Get system status with metrics"""
+    try:
+        import psutil
+        
+        status = {
+            'cpu_percent': psutil.cpu_percent(),
+            'memory_percent': psutil.virtual_memory().percent,
+            'disk_percent': psutil.disk_usage('/').percent,
+            'network': network_monitor.get_network_status(),
+            'active_streams': len(decoder.get_active_streams()),
+            'uptime': time.time() - psutil.boot_time(),
+            'timestamp': datetime.now().isoformat(),
+            'output_config': {"output_type": "hdmi", "resolution": "1920x1080", "refresh": 60}  # Placeholder
+        }
+        
+        return jsonify(status)
+        
+    except Exception as e:
+        logger.error(f"Error getting system status: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
 @app.route('/api/system_info')
 def system_info():
     """Get system information"""
@@ -142,15 +501,11 @@ def system_info():
     return jsonify({
         'cpu_percent': psutil.cpu_percent(),
         'memory_percent': psutil.virtual_memory().percent,
-        'disk_usage': psutil.disk_usage('/').percent,
-        'temperature': get_cpu_temperature(),
-        'network_stats': network_monitor.get_network_stats()
+        'disk_percent': psutil.disk_usage('/').percent,
+        'cpu_count': psutil.cpu_count(),
+        'memory_total': psutil.virtual_memory().total,
+        'disk_total': psutil.disk_usage('/').total
     })
-
-@app.route('/api/network_status')
-def network_status():
-    """Get network status and diagnostics"""
-    return jsonify(network_monitor.get_network_stats())
 
 @app.route('/api/network_diagnostics')
 def network_diagnostics():

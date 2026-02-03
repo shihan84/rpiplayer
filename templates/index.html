@@ -3,203 +3,1728 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V-Player - Professional Streaming Solution</title>
+    <title>V-Player Enterprise - Media Live Console</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📺</text></svg>">
 </head>
-<body>
-    <div class="container">
-        <header>
-            <div class="branding">
-                <h1>🎬 V-Player</h1>
-                <div class="tagline">Professional Streaming Solution</div>
+<body class="enterprise-theme">
+    <!-- Enterprise Header -->
+    <header class="enterprise-header">
+        <div class="header-left">
+            <div class="logo">
+                <i class="fas fa-broadcast-tower"></i>
+                <span class="brand-name">V-Player <strong>Enterprise</strong></span>
             </div>
-            <div class="system-info">
-                <span id="cpu-temp">CPU: --°C</span>
-                <span id="cpu-usage">CPU: --%</span>
-                <span id="mem-usage">RAM: --%</span>
+            <div class="product-info">
+                <span class="edition">Media Live Console</span>
+                <span class="version">v2.0.1</span>
             </div>
-        </header>
-
-        <main>
-            <section class="stream-controls">
-                <h2>Stream Configuration</h2>
-                <form id="stream-form">
-                    <div class="form-group">
-                        <label for="stream-url">Stream URL:</label>
-                        <input type="text" id="stream-url" placeholder="Enter stream URL (e.g., srt://192.168.1.100:1234)" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="stream-type">Stream Type:</label>
-                        <select id="stream-type">
-                            <option value="auto">Auto-detect</option>
-                            <option value="srt">SRT</option>
-                            <option value="rtmp">RTMP</option>
-                            <option value="udp">UDP</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" id="start-btn">▶️ Start Stream</button>
-                        <button type="button" id="stop-btn" disabled>⏹️ Stop Stream</button>
-                    </div>
-                </form>
-            </section>
-
-            <section class="video-container">
-                <h2>Video Output</h2>
-                <div class="video-wrapper">
-                    <video id="video-player" controls muted autoplay>
-                        Your browser does not support the video tag.
-                    </video>
-                    <div id="no-stream" class="placeholder">
-                        <div class="placeholder-content">
-                            <div class="icon">📺</div>
-                            <p>No active stream</p>
-                            <p>Configure and start a stream to begin playback</p>
-                        </div>
-                    </div>
+        </div>
+        
+        <div class="header-center">
+            <nav class="main-nav">
+                <button class="nav-btn active" data-tab="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </button>
+                <button class="nav-btn" data-tab="channels">
+                    <i class="fas fa-satellite-dish"></i>
+                    Channels
+                </button>
+                <button class="nav-btn" data-tab="network">
+                    <i class="fas fa-network-wired"></i>
+                    Network
+                </button>
+                <button class="nav-btn" data-tab="outputs">
+                    <i class="fas fa-tv"></i>
+                    Outputs
+                </button>
+                <button class="nav-btn" data-tab="monitoring">
+                    <i class="fas fa-chart-line"></i>
+                    Monitoring
+                </button>
+            </nav>
+        </div>
+        
+        <div class="header-right">
+            <div class="system-status">
+                <div class="status-indicator online">
+                    <i class="fas fa-circle"></i>
+                    <span>ONLINE</span>
                 </div>
-                <div class="stream-info">
-                    <span id="current-stream">No stream active</span>
-                    <span id="stream-duration">Duration: 00:00</span>
+                <div class="system-metrics">
+                    <span class="metric" id="cpu-usage">CPU: --%</span>
+                    <span class="metric" id="mem-usage">RAM: --%</span>
+                    <span class="metric" id="cpu-temp">TEMP: --°C</span>
                 </div>
-            </section>
-
-            <section class="streams-list">
-                <h2>Active Streams</h2>
-                <div id="streams-container">
-                    <div class="no-streams">No active streams</div>
-                </div>
-            </section>
-
-            <section class="network-status">
-                <h2>Network Status</h2>
-                <div class="network-info">
-                    <div class="network-interfaces">
-                        <h3>Interfaces</h3>
-                        <div id="network-interfaces">
-                            <div class="interface-placeholder">Loading network status...</div>
-                        </div>
-                    </div>
-                    <div class="network-stats">
-                        <h3>Bandwidth</h3>
-                        <div class="bandwidth-display">
-                            <div class="bandwidth-item">
-                                <span class="label">Upload:</span>
-                                <span id="upload-speed">0 Mbps</span>
-                            </div>
-                            <div class="bandwidth-item">
-                                <span class="label">Download:</span>
-                                <span id="download-speed">0 Mbps</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="network-controls">
-                    <button id="wifi-scan-btn" class="btn-secondary">📡 Scan WiFi</button>
-                    <button id="network-diag-btn" class="btn-secondary">🔧 Diagnostics</button>
-                    <button id="network-optimize-btn" class="btn-primary">⚡ Optimize</button>
-                </div>
-            </section>
-
-            <section class="network-config">
-                <h2>Network Configuration</h2>
-                <div class="config-tabs">
-                    <button class="tab-btn active" data-tab="wifi">WiFi</button>
-                    <button class="tab-btn" data-tab="ethernet">Ethernet</button>
-                    <button class="tab-btn" data-tab="hotspot">Hotspot</button>
-                </div>
-                
-                <div class="tab-content active" id="wifi-tab">
-                    <div class="wifi-networks" id="wifi-networks">
-                        <div class="scan-placeholder">Click "Scan WiFi" to find networks</div>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="ethernet-tab">
-                    <div class="ethernet-config">
-                        <div class="form-group">
-                            <label>Configuration Method:</label>
-                            <select id="eth-method">
-                                <option value="dhcp">DHCP (Automatic)</option>
-                                <option value="static">Static IP</option>
-                            </select>
-                        </div>
-                        <div class="static-config" id="static-config" style="display: none;">
-                            <div class="form-group">
-                                <label>IP Address:</label>
-                                <input type="text" id="static-ip" placeholder="192.168.1.100">
-                            </div>
-                            <div class="form-group">
-                                <label>Netmask:</label>
-                                <input type="text" id="static-netmask" placeholder="255.255.255.0">
-                            </div>
-                            <div class="form-group">
-                                <label>Gateway:</label>
-                                <input type="text" id="static-gateway" placeholder="192.168.1.1">
-                            </div>
-                        </div>
-                        <button class="btn-primary" id="apply-eth-config">Apply Ethernet Config</button>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="hotspot-tab">
-                    <div class="hotspot-config">
-                        <div class="form-group">
-                            <label>Hotspot SSID:</label>
-                            <input type="text" id="hotspot-ssid" value="RPI-Player">
-                        </div>
-                        <div class="form-group">
-                            <label>Password:</label>
-                            <input type="password" id="hotspot-password" value="rpiplayer123">
-                        </div>
-                        <div class="form-group">
-                            <label>Channel:</label>
-                            <select id="hotspot-channel">
-                                <option value="1">1</option>
-                                <option value="6" selected>6</option>
-                                <option value="11">11</option>
-                            </select>
-                        </div>
-                        <div class="hotspot-status">
-                            <span id="hotspot-status-text">Hotspot: Disabled</span>
-                            <button class="btn-primary" id="toggle-hotspot">Enable Hotspot</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="logs">
-                <h2>System Logs</h2>
-                <div id="log-container">
-                    <div class="log-entry info">System ready</div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-branding">
-                <div class="logo">V-Player</div>
-                <div class="tagline">Professional Streaming Solution</div>
             </div>
-            <div class="footer-info">
-                <div class="company">
-                    <strong>Powered by Itassist Broadcast Solutions</strong>
-                    <div class="copyright">© 2026 Itassist Broadcast Solutions. All rights reserved.</div>
-                </div>
-                <div class="version">
-                    <span id="app-version">Version 1.0.0</span>
+            <div class="user-info">
+                <i class="fas fa-user-shield"></i>
+                <span>Admin</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="enterprise-main">
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboard-tab">
+            <div class="dashboard-grid">
+                <!-- Channel Overview -->
+                <section class="card channel-overview">
+                    <div class="card-header">
+                        <h3><i class="fas fa-satellite-dish"></i> Channel Overview</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-primary" onclick="createNewChannel()">
+                                <i class="fas fa-plus"></i> New Channel
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="channel-grid" id="channel-grid">
+                            <!-- Channels will be populated here -->
+                            <div class="channel-card placeholder">
+                                <div class="channel-placeholder">
+                                    <i class="fas fa-plus-circle"></i>
+                                    <p>Create your first channel</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Video Output Preview -->
+                <section class="card video-preview">
+                    <div class="card-header">
+                        <h3><i class="fas fa-tv"></i> Program Output</h3>
+                        <div class="output-controls">
+                            <button class="btn btn-sm" onclick="toggleFullscreen()">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button class="btn btn-sm" onclick="toggleAudio()">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="video-container">
+                            <video id="preview-video" controls muted autoplay></video>
+                            <div class="video-overlay">
+                                <div class="output-info">
+                                    <span class="output-label">PROGRAM</span>
+                                    <span class="output-resolution">1920x1080</span>
+                                    <span class="output-fps">30fps</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Input Sources -->
+                <section class="card input-sources">
+                    <div class="card-header">
+                        <h3><i class="fas fa-plug"></i> Input Sources</h3>
+                        <button class="btn btn-sm" onclick="addInputSource()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-list" id="input-list">
+                            <!-- Input sources will be populated here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- System Resources -->
+                <section class="card system-resources">
+                    <div class="card-header">
+                        <h3><i class="fas fa-server"></i> System Resources</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="resource-grid">
+                            <div class="resource-item">
+                                <div class="resource-label">CPU Usage</div>
+                                <div class="resource-bar">
+                                    <div class="resource-fill" id="cpu-bar" style="width: 0%"></div>
+                                </div>
+                                <div class="resource-value" id="cpu-value">0%</div>
+                            </div>
+                            <div class="resource-item">
+                                <div class="resource-label">Memory</div>
+                                <div class="resource-bar">
+                                    <div class="resource-fill" id="mem-bar" style="width: 0%"></div>
+                                </div>
+                                <div class="resource-value" id="mem-value">0%</div>
+                            </div>
+                            <div class="resource-item">
+                                <div class="resource-label">Network</div>
+                                <div class="resource-bar">
+                                    <div class="resource-fill" id="net-bar" style="width: 0%"></div>
+                                </div>
+                                <div class="resource-value" id="net-value">0 Mbps</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Channels Tab -->
+        <div class="tab-content" id="channels-tab">
+            <div class="channels-container">
+                <section class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-satellite-dish"></i> Channel Management</h3>
+                        <button class="btn btn-primary" onclick="createNewChannel()">
+                            <i class="fas fa-plus"></i> Create Channel
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="channel-table-container">
+                            <table class="enterprise-table">
+                                <thead>
+                                    <tr>
+                                        <th>Channel ID</th>
+                                        <th>Name</th>
+                                        <th>State</th>
+                                        <th>Input</th>
+                                        <th>Output Groups</th>
+                                        <th>Bitrate</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="channels-table">
+                                    <!-- Channel rows will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Network Tab -->
+        <div class="tab-content" id="network-tab">
+            <div class="network-container">
+                <div class="network-grid">
+                    <!-- Network Status Overview -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-network-wired"></i> Network Status</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-sm" onclick="refreshNetworkStatus()">
+                                    <i class="fas fa-sync"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="network-interfaces" id="network-interfaces">
+                                <!-- Network interfaces will be populated here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- WiFi Configuration -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-wifi"></i> WiFi Configuration</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-sm" onclick="scanWiFiNetworks()">
+                                    <i class="fas fa-search"></i> Scan Networks
+                                </button>
+                                <button class="btn btn-primary" onclick="showWiFiConnectDialog()">
+                                    <i class="fas fa-plus"></i> Connect
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="wifi-networks" id="wifi-networks">
+                                <!-- WiFi networks will be populated here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Ethernet Configuration -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-ethernet"></i> Ethernet Configuration</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-primary" onclick="showStaticIPDialog()">
+                                    <i class="fas fa-cog"></i> Configure Static IP
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="ethernet-config">
+                                <div class="interface-info" id="eth0-info">
+                                    <p>Ethernet interface status will appear here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Hotspot Configuration -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-broadcast-tower"></i> WiFi Hotspot</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-success" onclick="startHotspot()" id="start-hotspot-btn">
+                                    <i class="fas fa-play"></i> Start Hotspot
+                                </button>
+                                <button class="btn btn-danger" onclick="stopHotspot()" id="stop-hotspot-btn" style="display: none;">
+                                    <i class="fas fa-stop"></i> Stop Hotspot
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="hotspot-status" id="hotspot-status">
+                                <div class="status-indicator">
+                                    <i class="fas fa-circle" id="hotspot-indicator"></i>
+                                    <span id="hotspot-status-text">Hotspot is currently inactive</span>
+                                </div>
+                                <div class="hotspot-config" id="hotspot-config">
+                                    <p>Configure hotspot settings to start WiFi access point</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Cloudflare Zero Trust -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-shield-alt"></i> Cloudflare Zero Trust (2024)</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-sm" onclick="refreshCloudflareStatus()">
+                                    <i class="fas fa-sync"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="cloudflare-status" id="cloudflare-status">
+                                <div class="status-overview">
+                                    <div class="status-item">
+                                        <div class="status-label">Installation</div>
+                                        <div class="status-value" id="cloudflare-installed">Checking...</div>
+                                    </div>
+                                    <div class="status-item">
+                                        <div class="status-label">Service Status</div>
+                                        <div class="status-value" id="cloudflare-service">Checking...</div>
+                                    </div>
+                                    <div class="status-item">
+                                        <div class="status-label">Method</div>
+                                        <div class="status-value">Dashboard-First 2024</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="cloudflare-actions">
+                                <button class="btn btn-primary" onclick="installCloudflared()">
+                                    <i class="fas fa-download"></i> Install cloudflared
+                                </button>
+                                <button class="btn btn-success" onclick="showCloudflareInstructions()">
+                                    <i class="fas fa-list-ol"></i> Setup Instructions
+                                </button>
+                                <button class="btn btn-warning" onclick="startCloudflare()">
+                                    <i class="fas fa-play"></i> Start Tunnel
+                                </button>
+                                <button class="btn btn-danger" onclick="stopCloudflare()">
+                                    <i class="fas fa-stop"></i> Stop Tunnel
+                                </button>
+                                <button class="btn btn-info" onclick="testCloudflare()">
+                                    <i class="fas fa-vial"></i> Test Connection
+                                </button>
+                            </div>
+
+                            <div class="cloudflare-setup">
+                                <h4><i class="fas fa-cog"></i> Quick Setup</h4>
+                                <div class="setup-form">
+                                    <div class="form-group">
+                                        <label>Hostname:</label>
+                                        <input type="text" id="cloudflare-hostname" 
+                                               placeholder="vplayer.yourdomain.com" 
+                                               value="vplayer.yourdomain.com" 
+                                               class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Local Port:</label>
+                                        <input type="number" id="cloudflare-port" 
+                                               value="5004" class="form-control">
+                                    </div>
+                                    <button class="btn btn-primary" onclick="generateSetupScript()">
+                                        <i class="fas fa-file-download"></i> Generate Setup Script
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Network Metrics -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-line"></i> Network Metrics</h3>
+                            <div class="card-actions">
+                                <button class="btn btn-sm" onclick="refreshNetworkMetrics()">
+                                    <i class="fas fa-sync"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="network-metrics" id="network-metrics">
+                                <div class="metric-item">
+                                    <div class="metric-label">Download Speed</div>
+                                    <div class="metric-value" id="download-speed">0 Mbps</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">Upload Speed</div>
+                                    <div class="metric-value" id="upload-speed">0 Mbps</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">WiFi Signal</div>
+                                    <div class="metric-value" id="wifi-signal">N/A</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-label">Packets</div>
+                                    <div class="metric-value" id="packet-count">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </div>
+
+        <!-- Outputs Tab -->
+        <div class="tab-content" id="outputs-tab">
+            <div class="outputs-container">
+                <section class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-tv"></i> Output Configuration</h3>
+                        <button class="btn btn-primary" onclick="createOutput()">
+                            <i class="fas fa-plus"></i> Add Output
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="output-grid">
+                            <!-- Video Output Options -->
+                            <div class="output-section">
+                                <h4><i class="fas fa-desktop"></i> Video Output</h4>
+                                <div class="output-options">
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="radio" name="video-output" value="hdmi" checked>
+                                            <span class="option-label">HDMI Output</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <select class="form-control">
+                                                <optgroup label="Official CEA Modes (TV Standards)">
+                                                    <option value="640x480@60p">CEA 1: VGA (640x480 @ 60Hz)</option>
+                                                    <option value="720x480@60p">CEA 2: 480p (4:3 @ 60Hz)</option>
+                                                    <option value="720x480@60p">CEA 3: 480p (16:9 @ 60Hz)</option>
+                                                    <option value="1280x720@60p">CEA 4: 720p60 (ATSC)</option>
+                                                    <option value="1920x1080@60i">CEA 5: 1080i60 (ATSC)</option>
+                                                    <option value="720x480@60i">CEA 6: 480i (4:3 @ 60Hz)</option>
+                                                    <option value="720x480@60i">CEA 7: 480i (16:9 @ 60Hz)</option>
+                                                    <option value="1920x1080@60p">CEA 16: 1080p60 (ATSC)</option>
+                                                    <option value="720x576@50p">CEA 17: 576p (4:3 @ 50Hz)</option>
+                                                    <option value="720x576@50p">CEA 18: 576p (16:9 @ 50Hz)</option>
+                                                    <option value="1280x720@50p">CEA 19: 720p50 (EBU)</option>
+                                                    <option value="1920x1080@50i">CEA 20: 1080i50 (EBU)</option>
+                                                    <option value="720x576@50i">CEA 21: 576i (4:3 @ 50Hz)</option>
+                                                    <option value="720x576@50i">CEA 22: 576i (16:9 @ 50Hz)</option>
+                                                    <option value="1920x1080@50p">CEA 31: 1080p50 (EBU)</option>
+                                                    <option value="1920x1080@24p">CEA 32: 1080p24 (Cinema)</option>
+                                                    <option value="1920x1080@25p">CEA 33: 1080p25 (European Cinema)</option>
+                                                    <option value="1920x1080@30p">CEA 34: 1080p30 (North American Cinema)</option>
+                                                </optgroup>
+                                                <optgroup label="Official DMT Modes (Computer Monitors)">
+                                                    <option value="640x480@60p">DMT 4: VGA 60Hz</option>
+                                                    <option value="640x480@75p">DMT 6: VGA 75Hz</option>
+                                                    <option value="800x600@60p">DMT 9: SVGA 60Hz</option>
+                                                    <option value="800x600@75p">DMT 11: SVGA 75Hz</option>
+                                                    <option value="1024x768@60p">DMT 16: XGA 60Hz</option>
+                                                    <option value="1024x768@75p">DMT 18: XGA 75Hz</option>
+                                                    <option value="1280x1024@60p">DMT 35: SXGA 60Hz</option>
+                                                    <option value="1366x768@60p">DMT 81: HD 1366x768 60Hz</option>
+                                                    <option value="1920x1080@60p">DMT 82: Full HD 1080p60</option>
+                                                    <option value="1280x720@60p">DMT 85: HD 720p60</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="radio" name="video-output" value="composite">
+                                            <span class="option-label">Composite (RCA) - SD Broadcast</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <select class="form-control">
+                                                <optgroup label="Broadcast SD Standards">
+                                                    <option value="720x576@50i">PAL-B/G (720x576 @ 50Hz Interlaced) - EBU</option>
+                                                    <option value="720x576@50i">PAL-I (720x576 @ 50Hz Interlaced) - UK</option>
+                                                    <option value="720x576@50i">PAL-D/K (720x576 @ 50Hz Interlaced) - Europe</option>
+                                                    <option value="720x486@60i">NTSC-M (720x486 @ 59.94Hz Interlaced) - North America</option>
+                                                    <option value="720x480@60i">NTSC-M (720x480 @ 59.94Hz Interlaced) - Japan</option>
+                                                    <option value="720x480@60i">NTSC-M (720x480 @ 59.94Hz Interlaced) - South America</option>
+                                                </optgroup>
+                                                <optgroup label="Digital SD Standards">
+                                                    <option value="720x576@50p">SD 576p (720x576 @ 50Hz Progressive) - Digital PAL</option>
+                                                    <option value="720x480@60p">SD 480p (720x480 @ 59.94Hz Progressive) - Digital NTSC</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="radio" name="video-output" value="broadcast">
+                                            <span class="option-label">Broadcast Output (via Converter)</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <select class="form-control">
+                                                <optgroup label="HD-SDI (via HDMI-SDI Converter)">
+                                                    <option value="1920x1080@60i">1080i50 - HD-SDI (EBU/SMPTE 292M)</option>
+                                                    <option value="1920x1080@60i">1080i59.94 - HD-SDI (SMPTE 292M)</option>
+                                                    <option value="1920x1080@60p">1080p50 - 3G-SDI (SMPTE 424M)</option>
+                                                    <option value="1920x1080@60p">1080p59.94 - 3G-SDI (SMPTE 424M)</option>
+                                                    <option value="1280x720@60p">720p50 - HD-SDI (SMPTE 292M)</option>
+                                                    <option value="1280x720@60p">720p59.94 - HD-SDI (SMPTE 292M)</option>
+                                                </optgroup>
+                                                <optgroup label="SD-SDI (via Converter)">
+                                                    <option value="720x576@50i">625i50 - SD-SDI (EBU/SMPTE 259M)</option>
+                                                    <option value="720x486@60i">525i59.94 - SD-SDI (SMPTE 259M)</option>
+                                                </optgroup>
+                                                <optgroup label="Professional Formats">
+                                                    <option value="1920x1080@24p">1080p24 - Cinema (24fps)</option>
+                                                    <option value="1920x1080@25p">1080p25 - European Cinema</option>
+                                                    <option value="1920x1080@30p">1080p30 - North American Cinema</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="radio" name="video-output" value="displayport">
+                                            <span class="option-label">DSI Display (RPi LCD)</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <select class="form-control">
+                                                <option>800x480 @ 60Hz (Official 7" LCD)</option>
+                                                <option>1024x600 @ 60Hz (Waveshare 10")</option>
+                                                <option>1280x800 @ 60Hz (Waveshare 10.1")</option>
+                                                <option>1280x400 @ 60Hz (Waveshare 7.9")</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="radio" name="video-output" value="dpi">
+                                            <span class="option-label">DPI LCD Panel</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <select class="form-control">
+                                                <option>800x480 @ 60Hz</option>
+                                                <option>1024x768 @ 60Hz</option>
+                                                <option>1280x800 @ 60Hz</option>
+                                                <option>1280x1024 @ 60Hz</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="radio" name="video-output" value="streaming">
+                                            <span class="option-label">Streaming Output</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <input type="text" class="form-control" placeholder="RTMP URL">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Audio Output Options -->
+                            <div class="output-section">
+                                <h4><i class="fas fa-volume-up"></i> Audio Output</h4>
+                                <div class="output-options">
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="radio" name="audio-output" value="hdmi" checked>
+                                            <span class="option-label">HDMI Audio</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <select class="form-control">
+                                                <option>Stereo (2.0)</option>
+                                                <option>Surround (5.1)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="radio" name="audio-output" value="analog">
+                                            <span class="option-label">Analog (3.5mm)</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <select class="form-control">
+                                                <option>Line Out</option>
+                                                <option>Headphones</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Streaming Options -->
+                            <div class="output-section">
+                                <h4><i class="fas fa-broadcast-tower"></i> Streaming Options</h4>
+                                <div class="output-options">
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="checkbox" id="enable-hls" checked>
+                                            <span class="option-label">Enable HLS Output</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <input type="text" class="form-control" placeholder="/streams/output.m3u8">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="checkbox" id="enable-rtmp">
+                                            <span class="option-label">Enable RTMP Output</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <input type="text" class="form-control" placeholder="rtmp://server/live/stream">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="output-option">
+                                        <label>
+                                            <input type="checkbox" id="enable-srt">
+                                            <span class="option-label">Enable SRT Output</span>
+                                        </label>
+                                        <div class="option-details">
+                                            <input type="text" class="form-control" placeholder="srt://server:1234">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="output-actions">
+                            <button class="btn btn-primary" onclick="applyOutputSettings()">
+                                <i class="fas fa-save"></i> Apply Settings
+                            </button>
+                            <button class="btn btn-secondary" onclick="testOutput()">
+                                <i class="fas fa-play"></i> Test Output
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Monitoring Tab -->
+        <div class="tab-content" id="monitoring-tab">
+            <div class="monitoring-container">
+                <div class="monitoring-grid">
+                    <!-- Real-time Metrics -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-line"></i> Real-time Metrics</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="metrics-chart" width="400" height="200"></canvas>
+                        </div>
+                    </section>
+
+                    <!-- Network Status -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-network-wired"></i> Network Status</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="network-info" id="network-info">
+                                <!-- Network info will be populated here -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- System Logs -->
+                    <section class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-file-alt"></i> System Logs</h3>
+                            <button class="btn btn-sm" onclick="refreshLogs()">
+                                <i class="fas fa-sync"></i>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="log-container" id="log-container">
+                                <!-- Logs will be populated here -->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Enterprise Footer -->
+    <footer class="enterprise-footer">
+        <div class="footer-left">
+            <span class="copyright">© 2026 Itassist Broadcast Solutions</span>
+            <span class="separator">|</span>
+            <span class="product">V-Player Enterprise Edition</span>
+        </div>
+        <div class="footer-right">
+            <span class="status">System Status: <strong class="status-online">OPERATIONAL</strong></span>
+            <span class="separator">|</span>
+            <span class="uptime">Uptime: <strong id="uptime">00:00:00</strong></span>
+        </div>
     </footer>
 
+    <!-- Modal for Channel Creation -->
+    <div class="modal" id="channel-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Channel</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="channel-form">
+                    <div class="form-group">
+                        <label>Channel Name</label>
+                        <input type="text" class="form-control" id="channel-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Input Source</label>
+                        <select class="form-control" id="channel-input">
+                            <option value="">Select Input</option>
+                            <option value="srt">SRT Stream</option>
+                            <option value="rtmp">RTMP Stream</option>
+                            <option value="udp">UDP Stream</option>
+                            <option value="file">Media File</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Stream URL</label>
+                        <input type="text" class="form-control" id="channel-url" placeholder="Enter stream URL">
+                    </div>
+                    <div class="form-group">
+                        <label>Output Resolution</label>
+                        <select class="form-control" id="channel-resolution">
+                            <optgroup label="Official CEA Modes (TV Standards)">
+                                <option value="640x480@60p">CEA 1: VGA (640x480 @ 60Hz)</option>
+                                <option value="720x480@60p">CEA 2: 480p (4:3 @ 60Hz)</option>
+                                <option value="720x480@60p">CEA 3: 480p (16:9 @ 60Hz)</option>
+                                <option value="1280x720@60p">CEA 4: 720p60 (ATSC)</option>
+                                <option value="1920x1080@60i">CEA 5: 1080i60 (ATSC)</option>
+                                <option value="1920x1080@60p">CEA 16: 1080p60 (ATSC)</option>
+                                <option value="720x576@50p">CEA 17: 576p (4:3 @ 50Hz)</option>
+                                <option value="720x576@50p">CEA 18: 576p (16:9 @ 50Hz)</option>
+                                <option value="1280x720@50p">CEA 19: 720p50 (EBU)</option>
+                                <option value="1920x1080@50i">CEA 20: 1080i50 (EBU)</option>
+                                <option value="1920x1080@50p">CEA 31: 1080p50 (EBU)</option>
+                                <option value="1920x1080@24p">CEA 32: 1080p24 (Cinema)</option>
+                                <option value="1920x1080@25p">CEA 33: 1080p25 (European Cinema)</option>
+                                <option value="1920x1080@30p">CEA 34: 1080p30 (North American Cinema)</option>
+                            </optgroup>
+                            <optgroup label="Official DMT Modes (Computer Monitors)">
+                                <option value="640x480@60p">DMT 4: VGA 60Hz</option>
+                                <option value="640x480@75p">DMT 6: VGA 75Hz</option>
+                                <option value="800x600@60p">DMT 9: SVGA 60Hz</option>
+                                <option value="800x600@75p">DMT 11: SVGA 75Hz</option>
+                                <option value="1024x768@60p">DMT 16: XGA 60Hz</option>
+                                <option value="1024x768@75p">DMT 18: XGA 75Hz</option>
+                                <option value="1280x1024@60p">DMT 35: SXGA 60Hz</option>
+                                <option value="1366x768@60p">DMT 81: HD 1366x768 60Hz</option>
+                                <option value="1920x1080@60p">DMT 82: Full HD 1080p60</option>
+                                <option value="1280x720@60p">DMT 85: HD 720p60</option>
+                            </optgroup>
+                            <optgroup label="DSI LCD Displays">
+                                <option value="800x480@60p">DSI: Official 7" LCD</option>
+                                <option value="1024x600@60p">DSI: Waveshare 10"</option>
+                                <option value="1280x800@60p">DSI: Waveshare 10.1"</option>
+                                <option value="1280x400@60p">DSI: Waveshare 7.9"</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveChannel()">Create Channel</button>
+            </div>
+        </div>
+    </div>
+
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script>
+        // Enterprise UI JavaScript
+        let socket = io();
+        let currentTab = 'dashboard';
+        let channels = [];
+        let uptimeInterval;
+
+        // Initialize enterprise UI
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEnterpriseUI();
+            startUptimeCounter();
+            loadChannels();
+        });
+
+        function initializeEnterpriseUI() {
+            // Tab navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
+            });
+
+            // Socket events
+            socket.on('connect', function() {
+                console.log('Connected to V-Player Enterprise');
+                updateSystemStatus('online');
+            });
+
+            socket.on('system_status', function(data) {
+                updateSystemMetrics(data);
+            });
+
+            socket.on('network_status', function(data) {
+                updateNetworkInfo(data);
+            });
+
+            // Initial system status update
+            updateSystemMetrics();
+        }
+
+        function switchTab(tabName) {
+            // Update navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+
+            currentTab = tabName;
+        }
+
+        function createNewChannel() {
+            document.getElementById('channel-modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('channel-modal').style.display = 'none';
+        }
+
+        function saveChannel() {
+            const channelData = {
+                name: document.getElementById('channel-name').value,
+                input: document.getElementById('channel-input').value,
+                url: document.getElementById('channel-url').value,
+                resolution: document.getElementById('channel-resolution').value
+            };
+
+            // Send to backend
+            fetch('/api/channels', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(channelData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    loadChannels();
+                    closeModal();
+                    showNotification('Channel created successfully', 'success');
+                }
+            })
+            .catch(error => {
+                showNotification('Error creating channel', 'error');
+            });
+        }
+
+        function loadChannels() {
+            // Load channels from backend
+            fetch('/api/channels')
+            .then(response => response.json())
+            .then(data => {
+                channels = data.channels || [];
+                renderChannels();
+            });
+        }
+
+        function renderChannels() {
+            const channelGrid = document.getElementById('channel-grid');
+            const channelsTable = document.getElementById('channels-table');
+
+            if (channels.length === 0) {
+                channelGrid.innerHTML = `
+                    <div class="channel-card placeholder">
+                        <div class="channel-placeholder">
+                            <i class="fas fa-plus-circle"></i>
+                            <p>Create your first channel</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Render channel cards
+            channelGrid.innerHTML = channels.map(channel => `
+                <div class="channel-card">
+                    <div class="channel-header">
+                        <h4>${channel.name}</h4>
+                        <span class="channel-state ${channel.state}">${channel.state.toUpperCase()}</span>
+                    </div>
+                    <div class="channel-info">
+                        <div class="channel-input">
+                            <i class="fas fa-plug"></i>
+                            <span>${channel.input}</span>
+                        </div>
+                        <div class="channel-output">
+                            <i class="fas fa-tv"></i>
+                            <span>${channel.resolution}</span>
+                        </div>
+                    </div>
+                    <div class="channel-actions">
+                        <button class="btn btn-sm" onclick="startChannel('${channel.id}')">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="btn btn-sm" onclick="stopChannel('${channel.id}')">
+                            <i class="fas fa-stop"></i>
+                        </button>
+                        <button class="btn btn-sm" onclick="editChannel('${channel.id}')">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render table rows
+            channelsTable.innerHTML = channels.map(channel => `
+                <tr>
+                    <td>${channel.id}</td>
+                    <td>${channel.name}</td>
+                    <td><span class="status-badge ${channel.state}">${channel.state}</span></td>
+                    <td>${channel.input}</td>
+                    <td>${channel.outputGroups || 0}</td>
+                    <td>${channel.bitrate || 'N/A'}</td>
+                    <td>
+                        <button class="btn btn-sm" onclick="startChannel('${channel.id}')">Start</button>
+                        <button class="btn btn-sm" onclick="stopChannel('${channel.id}')">Stop</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateSystemMetrics(data) {
+            if (!data) {
+                data = {
+                    cpu: Math.random() * 100,
+                    memory: Math.random() * 100,
+                    temperature: 45 + Math.random() * 20
+                };
+            }
+
+            // Update header metrics
+            document.getElementById('cpu-usage').textContent = `CPU: ${data.cpu.toFixed(1)}%`;
+            document.getElementById('mem-usage').textContent = `RAM: ${data.memory.toFixed(1)}%`;
+            document.getElementById('cpu-temp').textContent = `TEMP: ${data.temperature.toFixed(1)}°C`;
+
+            // Update resource bars
+            document.getElementById('cpu-bar').style.width = `${data.cpu}%`;
+            document.getElementById('cpu-value').textContent = `${data.cpu.toFixed(1)}%`;
+            
+            document.getElementById('mem-bar').style.width = `${data.memory}%`;
+            document.getElementById('mem-value').textContent = `${data.memory.toFixed(1)}%`;
+        }
+
+        function updateNetworkInfo(data) {
+            const networkInfo = document.getElementById('network-info');
+            if (!data) {
+                data = {
+                    interfaces: [
+                        { name: 'eth0', status: 'up', ip: '192.168.1.100', speed: '1Gbps' },
+                        { name: 'wlan0', status: 'up', ip: '192.168.1.101', speed: '300Mbps' }
+                    ],
+                    bandwidth: { upload: 10.5, download: 45.2 }
+                };
+            }
+
+            networkInfo.innerHTML = data.interfaces.map(iface => `
+                <div class="network-interface">
+                    <div class="interface-header">
+                        <span class="interface-name">${iface.name}</span>
+                        <span class="interface-status ${iface.status}">${iface.status.toUpperCase()}</span>
+                    </div>
+                    <div class="interface-details">
+                        <span class="interface-ip">${iface.ip}</span>
+                        <span class="interface-speed">${iface.speed}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function startUptimeCounter() {
+            let seconds = 0;
+            uptimeInterval = setInterval(() => {
+                seconds++;
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secs = seconds % 60;
+                
+                document.getElementById('uptime').textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function showNotification(message, type) {
+            // Implementation for showing notifications
+            console.log(`${type}: ${message}`);
+        }
+
+        function applyOutputSettings() {
+            const settings = {
+                video: document.querySelector('input[name="video-output"]:checked')?.value,
+                audio: document.querySelector('input[name="audio-output"]:checked')?.value,
+                hls: document.getElementById('enable-hls').checked,
+                rtmp: document.getElementById('enable-rtmp').checked,
+                srt: document.getElementById('enable-srt').checked
+            };
+
+            fetch('/api/outputs', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(settings)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification('Output settings applied successfully', 'success');
+                }
+            });
+        }
+
+        function testOutput() {
+            showNotification('Testing output...', 'info');
+            // Implementation for testing output
+        }
+
+        function toggleFullscreen() {
+            const video = document.getElementById('preview-video');
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            }
+        }
+
+        function toggleAudio() {
+            const video = document.getElementById('preview-video');
+            video.muted = !video.muted;
+        }
+
+        // Network Configuration Functions
+        function refreshNetworkStatus() {
+            fetch('/api/network/status')
+                .then(response => response.json())
+                .then(data => {
+                    updateNetworkInterfaces(data.status.interfaces);
+                    updateNetworkMetrics(data.metrics);
+                })
+                .catch(error => {
+                    console.error('Error refreshing network status:', error);
+                    showNotification('Failed to refresh network status', 'error');
+                });
+        }
+
+        function updateNetworkInterfaces(interfaces) {
+            const container = document.getElementById('network-interfaces');
+            
+            if (interfaces.error) {
+                container.innerHTML = `<p class="error">Error: ${interfaces.error}</p>`;
+                return;
+            }
+            
+            container.innerHTML = Object.keys(interfaces).map(interfaceName => {
+                const interface = interfaces[interfaceName];
+                const state = interface.state || 'UNKNOWN';
+                const isActive = state === 'UP' || state === 'RUNNING';
+                
+                return `
+                    <div class="interface-card">
+                        <div class="interface-info">
+                            <div>
+                                <div class="interface-name">${interfaceName}</div>
+                                <div class="interface-status">${state}</div>
+                                <div class="interface-ip">${interface.ip_addresses.join(', ') || 'No IP'}</div>
+                            </div>
+                            <div class="interface-state ${isActive ? 'up' : 'down'}">${state}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateNetworkMetrics(metrics) {
+            if (metrics.error) return;
+            
+            const interfaces = metrics.interfaces || {};
+            const wifi = metrics.wifi || {};
+            
+            // Update network metrics
+            let totalRx = 0;
+            let totalTx = 0;
+            let totalPackets = 0;
+            
+            Object.keys(interfaces).forEach(interfaceName => {
+                const interfaceData = interfaces[interfaceName];
+                if (interfaceData.rx_bytes) totalRx += interfaceData.rx_bytes;
+                if (interfaceData.tx_bytes) totalTx += interfaceData.tx_bytes;
+                if (interfaceData.rx_packets) totalPackets += interfaceData.rx_packets;
+                if (interfaceData.tx_packets) totalPackets += interfaceData.tx_packets;
+            });
+            
+            // Update display
+            document.getElementById('download-speed').textContent = '0 Mbps'; // Calculate from bytes
+            document.getElementById('upload-speed').textContent = '0 Mbps';
+            document.getElementById('packet-count').textContent = totalPackets.toLocaleString();
+            
+            // Update WiFi signal if available
+            if (wifi.signal_level !== undefined) {
+                const signal = wifi.signal_level;
+                let signalText = `${signal} dBm`;
+                let signalClass = 'weak';
+                
+                if (signal > -50) signalClass = 'strong';
+                else if (signal > -60) signalClass = 'moderate';
+                else if (signal > -70) signalClass = 'weak';
+                
+                document.getElementById('wifi-signal').textContent = signalText;
+            }
+        }
+
+        function scanWiFiNetworks() {
+            const container = document.getElementById('wifi-networks');
+            container.innerHTML = '<div class="loading-spinner"></div> Scanning for WiFi networks...';
+            
+            fetch('/api/network/wifi/scan')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        container.innerHTML = `<p class="error">Error: ${data.error}</p>`;
+                        return;
+                    }
+                    
+                    container.innerHTML = data.networks.map((network, index) => {
+                        const ssid = network.ESSID || 'Unknown Network';
+                        const signal = network.Quality || 'Unknown';
+                        const security = network.Encryption || 'Open';
+                        
+                        // Parse signal strength for bars
+                        const signalMatch = signal.match(/(\d+)/);
+                        const signalLevel = signalMatch ? parseInt(signalMatch[1]) : 0;
+                        const bars = Math.min(5, Math.max(1, Math.ceil(signalLevel / 20)));
+                        
+                        return `
+                            <div class="wifi-network" onclick="selectWiFiNetwork(${index})">
+                                <div class="wifi-info">
+                                    <div class="wifi-ssid">${ssid}</div>
+                                    <div class="wifi-signal">${signal}</div>
+                                    <div class="wifi-security">${security}</div>
+                                </div>
+                                <div class="signal-strength">
+                                    ${Array(5).fill(0).map((_, i) => 
+                                        `<div class="signal-bar ${i < bars ? 'active' : ''}"></div>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                })
+                .catch(error => {
+                    console.error('Error scanning WiFi networks:', error);
+                    container.innerHTML = '<p class="error">Failed to scan WiFi networks</p>';
+                    showNotification('Failed to scan WiFi networks', 'error');
+                });
+        }
+
+        let selectedWiFiNetwork = null;
+
+        function selectWiFiNetwork(index) {
+            // Remove previous selection
+            document.querySelectorAll('.wifi-network').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selection to clicked network
+            const networks = document.querySelectorAll('.wifi-network');
+            if (networks[index]) {
+                networks[index].classList.add('selected');
+                selectedWiFiIndex = index;
+            }
+        }
+
+        function showWiFiConnectDialog() {
+            if (selectedWiFiIndex === null) {
+                showNotification('Please select a WiFi network first', 'warning');
+                return;
+            }
+            
+            const networks = document.querySelectorAll('.wifi-network');
+            const network = networks[selectedWiFiIndex];
+            const ssid = network.querySelector('.wifi-ssid').textContent;
+            
+            // Create dialog
+            const dialog = document.createElement('div');
+            dialog.className = 'network-dialog';
+            dialog.innerHTML = `
+                <div class="network-dialog-header">
+                    <h3>Connect to WiFi Network</h3>
+                    <button class="modal-close" onclick="closeNetworkDialog()">&times;</button>
+                </div>
+                <div class="network-dialog-body">
+                    <div class="form-group">
+                        <label>Network: ${ssid}</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="wifi-password">Password:</label>
+                        <input type="password" id="wifi-password" class="form-control" placeholder="Enter WiFi password">
+                    </div>
+                </div>
+                <div class="network-dialog-footer">
+                    <button class="btn btn-secondary" onclick="closeNetworkDialog()">Cancel</button>
+                    <button class="btn btn-primary" onclick="connectToWiFi()">Connect</button>
+                </div>
+            `;
+            
+            document.body.appendChild(dialog);
+        }
+
+        function closeNetworkDialog() {
+            const dialog = document.querySelector('.network-dialog');
+            if (dialog) {
+                dialog.remove();
+            }
+        }
+
+        function connectToWiFi() {
+            const password = document.getElementById('wifi-password').value;
+            const networks = document.querySelectorAll('.wifi-network');
+            const network = networks[selectedWiFiIndex];
+            const ssid = network.querySelector('.wifi-ssid').textContent;
+            
+            if (!password) {
+                showNotification('Please enter WiFi password', 'warning');
+                return;
+            }
+            
+            fetch('/api/network/wifi/connect', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ssid: ssid,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                closeNetworkDialog();
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    refreshNetworkStatus();
+                } else {
+                    showNotification(data.error || 'Failed to connect to WiFi', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error connecting to WiFi:', error);
+                closeNetworkDialog();
+                showNotification('Failed to connect to WiFi', 'error');
+            });
+        }
+
+        function showStaticIPDialog() {
+            const dialog = document.createElement('div');
+            dialog.className = 'network-dialog';
+            dialog.innerHTML = `
+                <div class="network-dialog-header">
+                    <h3>Configure Static IP</h3>
+                    <button class="modal-close" onclick="closeNetworkDialog()">&times;</button>
+                </div>
+                <div class="network-dialog-body">
+                    <div class="form-group">
+                        <label for="static-interface">Interface:</label>
+                        <select id="static-interface" class="form-control">
+                            <option value="eth0">Ethernet (eth0)</option>
+                            <option value="wlan0">WiFi (wlan0)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="static-ip">IP Address:</label>
+                        <input type="text" id="static-ip" class="form-control" placeholder="192.168.1.100">
+                    </div>
+                    <div class="form-group">
+                        <label for="static-netmask">Netmask:</label>
+                        <input type="text" id="static-netmask" class="form-control" value="255.255.255.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="static-gateway">Gateway:</label>
+                        <input type="text" id="static-gateway" class="form-control" placeholder="192.168.1.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="static-dns">DNS Servers:</label>
+                        <input type="text" id="static-dns" class="form-control" value="8.8.8.8, 8.8.4.4">
+                    </div>
+                </div>
+                <div class="network-dialog-footer">
+                    <button class="btn btn-secondary" onclick="closeNetworkDialog()">Cancel</button>
+                    <button class="btn btn-primary" onclick="configureStaticIP()">Apply</button>
+                </div>
+            `;
+            
+            document.body.appendChild(dialog);
+        }
+
+        function configureStaticIP() {
+            const interface = document.getElementById('static-interface').value;
+            const ipAddress = document.getElementById('static-ip').value;
+            const netmask = document.getElementById('static-netmask').value;
+            const gateway = document.getElementById('static-gateway').value;
+            const dnsServers = document.getElementById('static-dns').value.split(',').map(s => s.trim());
+            
+            if (!interface || !ipAddress || !gateway) {
+                showNotification('Please fill in all required fields', 'warning');
+                return;
+            }
+            
+            fetch('/api/network/static-ip', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    interface: interface,
+                    ip_address: ipAddress,
+                    netmask: netmask,
+                    gateway: gateway,
+                    dns_servers: dnsServers
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                closeNetworkDialog();
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    refreshNetworkStatus();
+                } else {
+                    showNotification(data.error || 'Failed to configure static IP', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error configuring static IP:', error);
+                closeNetworkDialog();
+                showNotification('Failed to configure static IP', 'error');
+            });
+        }
+
+        function startHotspot() {
+            const dialog = document.createElement('div');
+            dialog.className = 'network-dialog';
+            dialog.innerHTML = `
+                <div class="network-dialog-header">
+                    <h3>Start WiFi Hotspot</h3>
+                    <button class="modal-close" onclick="closeNetworkDialog()">&times;</button>
+                </div>
+                <div class="network-dialog-body">
+                    <div class="form-group">
+                        <label for="hotspot-ssid">Network Name (SSID):</label>
+                        <input type="text" id="hotspot-ssid" class="form-control" value="V-Player-Hotspot" placeholder="Enter hotspot name">
+                    </div>
+                    <div class="form-group">
+                        <label for="hotspot-password">Password:</label>
+                        <input type="password" id="hotspot-password" class="form-control" value="vplayer123" placeholder="Enter hotspot password">
+                    </div>
+                    <div class="form-group">
+                        <label for="hotspot-channel">Channel:</label>
+                        <select id="hotspot-channel" class="form-control">
+                            <option value="1">Channel 1</option>
+                            <option value="6">Channel 6</option>
+                            <option value="9" selected>Channel 9</option>
+                            <option value="11">Channel 11</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="network-dialog-footer">
+                    <button class="btn btn-secondary" onclick="closeNetworkDialog()">Cancel</button>
+                    <button class="btn btn-success" onclick="startHotspotConfirm()">Start Hotspot</button>
+                </div>
+            `;
+            
+            document.body.appendChild(dialog);
+        }
+
+        function startHotspotConfirm() {
+            const ssid = document.getElementById('hotspot-ssid').value;
+            const password = document.getElementById('hotspot-password').value;
+            const channel = parseInt(document.getElementById('hotspot-channel').value);
+            
+            if (!ssid || !password) {
+                showNotification('Please fill in all required fields', 'warning');
+                return;
+            }
+            
+            closeNetworkDialog();
+            
+            // Update UI to show starting state
+            document.getElementById('start-hotspot-btn').style.display = 'none';
+            document.getElementById('hotspot-status-text').textContent = 'Starting hotspot...';
+            document.getElementById('hotspot-indicator').classList.add('loading-spinner');
+            
+            fetch('/api/network/hotspot/start', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ssid: ssid,
+                    password: password,
+                    channel: channel,
+                    country_code: 'US'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    updateHotspotStatus(true);
+                } else {
+                    showNotification(data.error || 'Failed to start hotspot', 'error');
+                    updateHotspotStatus(false);
+                }
+            })
+            .catch(error => {
+                console.error('Error starting hotspot:', error);
+                showNotification('Failed to start hotspot', 'error');
+                updateHotspotStatus(false);
+            });
+        }
+
+        function stopHotspot() {
+            fetch('/api/network/hotspot/stop', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    updateHotspotStatus(false);
+                } else {
+                    showNotification(data.error || 'Failed to stop hotspot', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error stopping hotspot:', error);
+                showNotification('Failed to stop hotspot', 'error');
+            });
+        }
+
+        function updateHotspotStatus(isActive) {
+            const indicator = document.getElementById('hotspot-indicator');
+            const statusText = document.getElementById('hotspot-status-text');
+            const startBtn = document.getElementById('start-hotspot-btn');
+            const stopBtn = document.getElementById('stop-hotspot-btn');
+            
+            if (isActive) {
+                indicator.classList.remove('loading-spinner');
+                indicator.classList.add('active');
+                statusText.textContent = 'Hotspot is active';
+                startBtn.style.display = 'none';
+                stopBtn.style.display = 'inline-flex';
+            } else {
+                indicator.classList.remove('loading-spinner', 'active');
+                statusText.textContent = 'Hotspot is currently inactive';
+                startBtn.style.display = 'inline-flex';
+                stopBtn.style.display = 'none';
+            }
+        }
+
+        function refreshNetworkMetrics() {
+            refreshNetworkStatus();
+        }
+
+        // Cloudflare Zero Trust Functions
+        function refreshCloudflareStatus() {
+            fetch('/api/cloudflare/status')
+                .then(response => response.json())
+                .then(data => {
+                    updateCloudflareStatus(data);
+                })
+                .catch(error => {
+                    console.error('Error refreshing Cloudflare status:', error);
+                });
+        }
+
+        function updateCloudflareStatus(data) {
+            const installedEl = document.getElementById('cloudflare-installed');
+            const serviceEl = document.getElementById('cloudflare-service');
+            
+            if (data.version && data.version.installed) {
+                installedEl.textContent = '✅ Installed';
+                installedEl.style.color = '#4CAF50';
+            } else {
+                installedEl.textContent = '❌ Not Installed';
+                installedEl.style.color = '#f44336';
+            }
+            
+            if (data.status && data.status.service_active) {
+                serviceEl.textContent = '✅ Active';
+                serviceEl.style.color = '#4CAF50';
+            } else {
+                serviceEl.textContent = '❌ Inactive';
+                serviceEl.style.color = '#f44336';
+            }
+        }
+
+        function installCloudflared() {
+            showNotification('Installing cloudflared...', 'info');
+            
+            fetch('/api/cloudflare/install', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    refreshCloudflareStatus();
+                } else {
+                    showNotification(data.error || 'Failed to install cloudflared', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error installing cloudflared:', error);
+                showNotification('Failed to install cloudflared', 'error');
+            });
+        }
+
+        function showCloudflareInstructions() {
+            const hostname = document.getElementById('cloudflare-hostname').value;
+            const port = document.getElementById('cloudflare-port').value;
+            
+            fetch('/api/cloudflare/instructions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    hostname: hostname,
+                    local_port: parseInt(port)
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showCloudflareInstructionsDialog(data.instructions);
+                } else {
+                    showNotification('Failed to get instructions', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error getting instructions:', error);
+                showNotification('Failed to get instructions', 'error');
+            });
+        }
+
+        function showCloudflareInstructionsDialog(instructions) {
+            let instructionsHtml = '<div class="instructions-content">';
+            instructionsHtml += '<h3>🌐 Cloudflare Zero Trust Setup Instructions (2024)</h3>';
+            instructionsHtml += '<p>Follow these steps to set up secure remote access:</p>';
+            
+            instructions.instructions.dashboard_steps.forEach(step => {
+                instructionsHtml += `<div class="instruction-step">`;
+                instructionsHtml += `<h4>Step ${step.step}: ${step.title}</h4>`;
+                instructionsHtml += `<ul>`;
+                step.instructions.forEach(instruction => {
+                    instructionsHtml += `<li>${instruction}</li>`;
+                });
+                instructionsHtml += `</ul></div>`;
+            });
+            
+            instructionsHtml += `<div class="final-info">`;
+            instructionsHtml += `<h4>🎯 Final Access URL:</h4>`;
+            instructionsHtml += `<p><strong>${instructions.access_url}</strong></p>`;
+            instructionsHtml += `</div>`;
+            instructionsHtml += `</div>`;
+            
+            showDialog('Cloudflare Setup Instructions', instructionsHtml);
+        }
+
+        function startCloudflare() {
+            showNotification('Starting Cloudflare tunnel...', 'info');
+            
+            fetch('/api/cloudflare/start', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    refreshCloudflareStatus();
+                } else {
+                    showNotification(data.error || 'Failed to start tunnel', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error starting tunnel:', error);
+                showNotification('Failed to start tunnel', 'error');
+            });
+        }
+
+        function stopCloudflare() {
+            showNotification('Stopping Cloudflare tunnel...', 'info');
+            
+            fetch('/api/cloudflare/stop', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    refreshCloudflareStatus();
+                } else {
+                    showNotification(data.error || 'Failed to stop tunnel', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error stopping tunnel:', error);
+                showNotification('Failed to stop tunnel', 'error');
+            });
+        }
+
+        function testCloudflare() {
+            const hostname = document.getElementById('cloudflare-hostname').value;
+            
+            showNotification('Testing tunnel connection...', 'info');
+            
+            fetch('/api/cloudflare/test', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    hostname: hostname
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.accessible) {
+                    showNotification(`✅ Tunnel accessible! Status: ${data.status_code}`, 'success');
+                } else {
+                    showNotification(`❌ Tunnel not accessible: ${data.error}`, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error testing tunnel:', error);
+                showNotification('Failed to test tunnel', 'error');
+            });
+        }
+
+        function generateSetupScript() {
+            const hostname = document.getElementById('cloudflare-hostname').value;
+            const port = document.getElementById('cloudflare-port').value;
+            
+            showNotification('Generating setup script...', 'info');
+            
+            fetch('/api/cloudflare/script', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    hostname: hostname,
+                    local_port: parseInt(port)
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    downloadScript(data.filename, data.script);
+                    showNotification('Setup script downloaded!', 'success');
+                } else {
+                    showNotification('Failed to generate script', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error generating script:', error);
+                showNotification('Failed to generate script', 'error');
+            });
+        }
+
+        function downloadScript(filename, content) {
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function showDialog(title, content) {
+            // Create modal dialog
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 800px; max-height: 80vh; overflow-y: auto;">
+                    <div class="modal-header">
+                        <h3>${title}</h3>
+                        <span class="close" onclick="this.closest('.modal').remove()">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        ${content}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Initialize network status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-refresh network status every 5 seconds
+            setInterval(refreshNetworkStatus, 5000);
+            
+            // Initialize Cloudflare status
+            refreshCloudflareStatus();
+        });
+    </script>
 </body>
 </html>

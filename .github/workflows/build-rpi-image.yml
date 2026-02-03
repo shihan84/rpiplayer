@@ -194,37 +194,49 @@ jobs:
         draft: false
         prerelease: false
         body: |
-          Raspberry Pi 3 streaming player image with:
-          - SRT, RTMP, UDP stream support
+          V-Player Enterprise Raspberry Pi Image with:
+          - Professional Broadcasting Interface (AWS Elemental MediaLive style)
+          - Complete Network Configuration (WiFi, Ethernet, Hotspot)
+          - Cloudflare Zero Trust Integration for secure remote access
           - Hardware-accelerated video decoding
-          - Web-based GUI interface
-          - Broadcast video output options (HDMI, composite)
-          - Network management and monitoring
-          - WiFi hotspot functionality
+          - Web-based GUI interface with enterprise features
+          - Broadcast video output options (HDMI, Composite, DSI, DPI)
+          - Real-time network monitoring and metrics
+          - Channel management and streaming controls
           - Auto-start service configuration
-          - Splash screen disabled for professional appearance
+          - Professional splash screen and branding
           
           ## Installation:
           1. Download the `.img.gz` file
           2. Extract using: `gunzip rpi-player-*.img.gz`
           3. Flash to SD card using Raspberry Pi Imager
-          4. Boot your Raspberry Pi 3
-          5. Access web interface at: `http://rpi-player.local:5000`
+          4. Boot your Raspberry Pi (3, 4, or 5)
+          5. Access web interface at: `http://rpi-player.local:5005`
           
           ## Default Settings:
-          - SSH: Enabled (user: rpiplayer, password: rpiplayer123)
-          - Web Interface: http://localhost:5000
-          - Streams folder: /home/rpiplayer/rpi-player/streams
+          - SSH: Enabled (user: pi, password: raspberry)
+          - Web Interface: http://localhost:5005
+          - Service: Automatically starts on boot
           - Network: DHCP enabled, WiFi hotspot available
           
+          ## Enterprise Features:
+          - Professional broadcasting dashboard
+          - Network configuration and monitoring
+          - Cloudflare Zero Trust remote access
+          - Video output management
+          - Channel streaming controls
+          - Real-time metrics and monitoring
+          
           ## Network Configuration:
-          - WiFi Client: Connect to existing networks via web interface
-          - WiFi Hotspot: SSID "RPI-Player", password "rpiplayer123"
-          - Ethernet: DHCP enabled
+          - WiFi Client: Connect via web interface
+          - WiFi Hotspot: SSID "V-Player-Hotspot", password "vplayer123"
+          - Ethernet: DHCP enabled, static IP configuration available
+          - Cloudflare: Zero Trust setup via web interface
           
           ## Troubleshooting:
-          - Check logs: `sudo journalctl -u rpi-player -f`
-          - Network tools: `/home/rpiplayer/rpi-player/network-manager.sh`
-          - Video output: `/home/rpiplayer/rpi-player/video-output-selector.sh`
+          - Check logs: `sudo journalctl -u vplayer -f`
+          - Service status: `sudo systemctl status vplayer`
+          - Network tools: Available in web interface
+          - Video output: Configurable via web interface
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

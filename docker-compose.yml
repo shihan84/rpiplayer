@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  vplayer-enterprise:
+    build: .
+    container_name: vplayer-enterprise
+    ports:
+      - "5005:5005"
+    volumes:
+      - ./logs:/app/logs
+      - ./static:/app/static
+      - ./templates:/app/templates
+    environment:
+      - PYTHONUNBUFFERED=1
+      - HOST=0.0.0.0
+      - PORT=5005
+    restart: unless-stopped
+    networks:
+      - vplayer-network
+
+  # Optional: Redis for caching (if needed in future)
+  redis:
+    image: redis:7-alpine
+    container_name: vplayer-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - vplayer-network
+
+networks:
+  vplayer-network:
+    driver: bridge
+
+volumes:
+  redis_data:
