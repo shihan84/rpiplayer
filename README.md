@@ -1,4 +1,4 @@
-# RPI Stream Player
+# V-Player - Professional Streaming Solution
 
 A comprehensive Raspberry Pi 3 streaming player with web GUI that supports multiple protocols including SRT, RTMP, UDP, HLS, and RTP with hardware-accelerated video decoding and multiple broadcast output options.
 
@@ -33,30 +33,43 @@ A comprehensive Raspberry Pi 3 streaming player with web GUI that supports multi
 - System resource monitoring
 - Stream testing tools
 
+### 🎯 V-Player Branding
+- Professional appearance with V-Player branding
+- Powered by Itassist Broadcast Solutions
+- Clean, modern user interface
+- Professional streaming solution
+
+### 📊 Network Management
+- Real-time bandwidth monitoring
+- Interface status tracking
+- Connection management
+- WiFi hotspot functionality
+- Network diagnostics and optimization
+
 ## Quick Start
 
 ### Option 1: Pre-built Image (Recommended)
-1. Download the latest pre-built image from [Releases](https://github.com/yourusername/rpi-player/releases)
+1. Download the latest pre-built image from [Releases](https://github.com/shihan84/rpiplayer/releases)
 2. Flash to SD card using Raspberry Pi Imager
 3. Boot your Raspberry Pi 3
-4. Access web interface at: `http://rpi-player.local:5000`
+4. Access web interface at: `http://v-player.local:5000`
 
 ### Option 2: Manual Installation
 
 #### Prerequisites
 ```bash
 # Update system
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo upgrade -y
 
 # Install dependencies
 sudo apt install -y python3 python3-pip nginx ffmpeg git
 ```
 
-#### Install RPI Player
+#### Install V-Player
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/rpi-player.git
-cd rpi-player
+git clone https://github.com/shihan84/rpiplayer.git
+cd rpiplayer
 
 # Install Python dependencies
 pip3 install -r requirements.txt
@@ -65,8 +78,8 @@ pip3 install -r requirements.txt
 sudo ./rpi-image/files/video-output-selector.sh
 
 # Start service
-sudo systemctl enable rpi-player.service
-sudo systemctl start rpi-player.service
+sudo systemctl enable v-player.service
+sudo systemctl start v-player.service
 ```
 
 ## Configuration
@@ -233,7 +246,7 @@ ffmpeg -version
 ffmpeg -i "srt://example.com:1234" -f null -
 
 # Check logs
-sudo journalctl -u rpi-player.service -f
+sudo journalctl -u v-player.service -f
 ```
 
 #### No Video Output
@@ -261,8 +274,8 @@ sudo reboot
 ```
 
 ### Log Files
-- **Application logs**: `/home/rpiplayer/rpi-player/logs/rpiplayer.log`
-- **System logs**: `sudo journalctl -u rpi-player.service`
+- **Application logs**: `/home/rpiplayer/rpi-player/logs/vplayer.log`
+- **System logs**: `sudo journalctl -u v-player.service`
 - **FFmpeg logs**: Stream-specific logs in `/tmp/`
 
 ### Performance Tuning
@@ -287,6 +300,8 @@ The project includes automated GitHub Actions for building custom Raspberry Pi i
 1. Push to `main` branch to trigger build
 2. Download generated image from Actions tab
 3. Flash image to SD card
+4. Boot your Raspberry Pi 3
+5. Access web interface at: `http://v-player.local:5000`
 
 ### Manual Build
 ```bash
@@ -294,8 +309,8 @@ The project includes automated GitHub Actions for building custom Raspberry Pi i
 git clone https://github.com/RPi-Distro/pi-gen.git
 cd pi-gen
 
-# Copy RPI Player stage
-cp -r ../rpi-player/rpi-image stage-rpi-player
+# Copy V-Player stage
+cp -r ../rpi-player/rpi-image stage-v-player
 
 # Build image
 sudo ./build.sh
@@ -318,16 +333,19 @@ python app.py
 
 ### Project Structure
 ```
-rpi-player/
+v-player/
 ├── app.py                 # Main Flask application
 ├── config.py             # Configuration settings
 ├── stream_decoder.py     # FFmpeg stream management
+├── network_monitor.py     # Network monitoring
 ├── requirements.txt      # Python dependencies
 ├── templates/            # HTML templates
 ├── static/              # CSS, JavaScript, images
 ├── rpi-image/           # Image build scripts
-│   ├── 00-rpi-player-config
+│   ├── 00-v-player-config
 │   ├── 01-ffmpeg-build
+│   ├── 02-network-config
+│   ├── 03-splash-config
 │   └── files/          # Configuration files
 └── README.md           # This file
 ```
@@ -336,24 +354,26 @@ rpi-player/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/rpi-player/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/rpi-player/discussions)
-- **Wiki**: [Project Wiki](https://github.com/yourusername/rpi-player/wiki)
+- **Issues**: [GitHub Issues](https://github.com/shihan84/rpiplayer/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/shihan84/rpiplayer/discussions)
+- **Wiki**: [Project Wiki](https://github.com/shihan84/rpiplayer/wiki)
 
-## Acknowledgments
+## About V-Player
 
-- FFmpeg for multimedia processing
-- Raspberry Pi Foundation for hardware support
-- Flask web framework
-- Socket.IO for real-time communication
-- HLS.js for video playback
+V-Player is a professional streaming solution developed by **Itassist Broadcast Solutions**, designed specifically for Raspberry Pi 3 hardware. It provides enterprise-grade streaming capabilities with a modern web interface, making it ideal for professional broadcasting applications.
+
+### Key Features:
+- **Professional Branding**: Clean, modern interface with V-Player branding
+- **Hardware Optimized**: Specifically tuned for Raspberry Pi 3 performance
+- **Broadcast Ready**: Multiple output options for professional use
+- **Network Management**: Comprehensive network configuration and monitoring
+- **Easy Deployment**: Automated image building and installation
+
+### Itassist Broadcast Solutions
+Itassist Broadcast Solutions is a leading provider of professional broadcasting and streaming solutions, specializing in hardware-optimized media players and network management systems.
+
+---
+
+**V-Player - Professional Streaming Solution by Itassist Broadcast Solutions**

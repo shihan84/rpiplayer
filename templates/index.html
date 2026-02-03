@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RPI Stream Player</title>
+    <title>V-Player - Professional Streaming Solution</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📺</text></svg>">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎬 RPI Stream Player</h1>
+            <div class="branding">
+                <h1>🎬 V-Player</h1>
+                <div class="tagline">Professional Streaming Solution</div>
+            </div>
             <div class="system-info">
                 <span id="cpu-temp">CPU: --°C</span>
                 <span id="cpu-usage">CPU: --%</span>
@@ -177,6 +181,24 @@
             </section>
         </main>
     </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-branding">
+                <div class="logo">V-Player</div>
+                <div class="tagline">Professional Streaming Solution</div>
+            </div>
+            <div class="footer-info">
+                <div class="company">
+                    <strong>Powered by Itassist Broadcast Solutions</strong>
+                    <div class="copyright">© 2026 Itassist Broadcast Solutions. All rights reserved.</div>
+                </div>
+                <div class="version">
+                    <span id="app-version">Version 1.0.0</span>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>

@@ -51,16 +51,24 @@ jobs:
         sudo mkdir -p /mnt/root/home/rpiplayer/rpi-player
         sudo mkdir -p /mnt/root/home/rpiplayer/rpi-player/{streams,logs,config}
         sudo mkdir -p /mnt/root/home/rpiplayer/rpi-player/{templates,static/css,static/js}
+        
+        # Copy application files
         sudo cp app.py /mnt/root/home/rpiplayer/rpi-player/
         sudo cp config.py /mnt/root/home/rpiplayer/rpi-player/
         sudo cp stream_decoder.py /mnt/root/home/rpiplayer/rpi-player/
         sudo cp network_monitor.py /mnt/root/home/rpiplayer/rpi-player/
         sudo cp requirements.txt /mnt/root/home/rpiplayer/rpi-player/
+        
+        # Copy web interface files
         sudo cp -r templates/* /mnt/root/home/rpiplayer/rpi-player/templates/
         sudo cp -r static/* /mnt/root/home/rpiplayer/rpi-player/static/
+        
+        # Copy scripts
         sudo mkdir -p /mnt/root/home/rpiplayer/rpi-player/scripts
-        sudo cp rpi-image/files/*.sh /mnt/root/home/rpiplayer/rpi-player/scripts/
-        sudo chmod +x /mnt/root/home/rpiplayer/rpi-player/scripts/*.sh
+        sudo cp rpi-image/files/*.sh /mnt/root/home/rpiplayer/rpi-player/scripts/ 2>/dev/null || true
+        sudo chmod +x /mnt/root/home/rpiplayer/rpi-player/scripts/*.sh 2>/dev/null || true
+        
+        # Set ownership
         sudo chroot /mnt/root chown -R rpiplayer:rpiplayer /home/rpiplayer/rpi-player
         
     - name: Install Python dependencies

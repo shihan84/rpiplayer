@@ -34,6 +34,18 @@ header h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    margin-bottom: 5px;
+}
+
+.branding {
+    text-align: center;
+}
+
+.branding .tagline {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+    margin-top: 5px;
 }
 
 .system-info {
@@ -567,6 +579,65 @@ button:disabled {
     transform: translateY(-2px);
 }
 
+/* Footer Styles */
+footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    margin-top: 40px;
+    padding: 30px 0;
+    border-top: 3px solid #667eea;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-branding {
+    text-align: center;
+}
+
+.footer-branding .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.footer-branding .tagline {
+    font-size: 0.9rem;
+    color: #bdc3c7;
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.footer-info .company {
+    margin-bottom: 10px;
+}
+
+.footer-info .copyright {
+    font-size: 0.8rem;
+    color: #95a5a6;
+    margin-top: 5px;
+}
+
+.footer-info .version {
+    font-size: 0.8rem;
+    color: #667eea;
+    font-weight: 500;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     main {
@@ -604,6 +675,17 @@ button:disabled {
     
     .system-info {
         justify-content: center;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .footer-branding,
+    .footer-info {
+        width: 100%;
     }
 }
 
