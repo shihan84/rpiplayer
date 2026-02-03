@@ -2,51 +2,53 @@
 
 A comprehensive Raspberry Pi 3 streaming player with web GUI that supports multiple protocols including SRT, RTMP, UDP, HLS, and RTP with hardware-accelerated video decoding and multiple broadcast output options.
 
-## Features
+## 🎯 Available Editions
 
-### 🎬 Stream Protocol Support
-- **SRT** (Secure Reliable Transport)
-- **RTMP** (Real-Time Messaging Protocol) 
-- **UDP** (User Datagram Protocol)
-- **HLS** (HTTP Live Streaming)
-- **RTP** (Real-time Transport Protocol)
-- **RTSP** (Real-Time Streaming Protocol)
+### 🟢 Standard Edition
+- **Flask-based architecture**
+- **Nginx reverse proxy**
+- **Basic authentication**
+- **Simple deployment**
+- **Lower resource usage**
+- **Perfect for small deployments**
 
-### 🖥️ Video Output Options
-- **HDMI** (Primary output)
-- **Composite** (RCA)
-- **DisplayPort** (RPi4+)
-- **DPI LCD Panels**
-- **DSI LCD Panels**
-- **Auto-detection**
+### � Enterprise Edition
+- **OpenResty + Flask hybrid**
+- **Advanced Lua scripting**
+- **JWT authentication**
+- **Redis caching**
+- **Prometheus metrics**
+- **Rate limiting**
+- **Advanced monitoring**
+- **High performance**
+- **Enterprise-grade security**
+- **Perfect for large deployments**
 
-### ⚡ Hardware Acceleration
-- **Video4Linux2 Memory-to-Memory** (v4l2m2m)
-- **OpenMAX** (OMX)
-- **Video Acceleration API** (VA-API)
-- **MMAL** (Multi-Media Abstraction Layer)
+## 🚀 Quick Start
 
-### 🌐 Web Interface
-- Modern responsive design
-- Real-time stream monitoring
-- WebSocket communication
-- System resource monitoring
-- Stream testing tools
+### Option 1: Choose Edition (Recommended)
+```bash
+git clone https://github.com/shihan84/rpiplayer.git
+cd rpiplayer
+sudo ./deploy/choose-version.sh
+```
 
-### 🎯 V-Player Branding
-- Professional appearance with V-Player branding
-- Powered by Itassist Broadcast Solutions
-- Clean, modern user interface
-- Professional streaming solution
+### Option 2: Standard Edition
+```bash
+git clone https://github.com/shihan84/rpiplayer.git
+cd rpiplayer
+sudo ./install-v-player.sh
+```
 
-### 📊 Network Management
-- Real-time bandwidth monitoring
-- Interface status tracking
-- Connection management
-- WiFi hotspot functionality
-- Network diagnostics and optimization
+### Option 3: Enterprise Edition
+```bash
+git clone https://github.com/shihan84/rpiplayer.git
+cd rpiplayer
+sudo ./enterprise/install-enterprise.sh
+```
 
-## Quick Start
+### Option 4: Pre-built Images
+Download from [GitHub Releases](https://github.com/shihan84/rpiplayer/releases)
 
 ### Option 1: Pre-built Image (Recommended)
 1. Download the latest pre-built image from [Releases](https://github.com/shihan84/rpiplayer/releases)
