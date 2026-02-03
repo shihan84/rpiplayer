@@ -33,10 +33,26 @@ jobs:
       contents: write
       packages: write
       
+    strategy:
+      matrix:
+        rpi_model: [rpi3, rpi4, rpi5]
+      fail-fast: false
+      
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       
+    - name: Cache pi-gen dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          pi-gen/cache
+          pi-gen/work
+          /var/cache/apt
+        key: ${{ runner.os }}-pi-gen-${{ hashFiles('**/build-rpi-image.py') }}
+        restore-keys: |
+          ${{ runner.os }}-pi-gen-
+          
     - name: Setup QEMU for ARM emulation
       run: |
         sudo apt-get update
@@ -172,9 +188,9 @@ jobs:
         fi
         
     - name: Upload image artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: rpi-player-image
+        name: rpi-player-image-${{ matrix.rpi_model }}
         path: |
           pi-gen/deploy/rpi-player*.img
           pi-gen/deploy/rpi-player*.img.gz
@@ -184,7 +200,7 @@ jobs:
         
     - name: Create Release
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: |
           pi-gen/deploy/rpi-player*.img.gz
