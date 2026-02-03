@@ -1,0 +1,144 @@
+#!/bin/bash -e
+
+# RPI Player Configuration Stage
+# Install and configure streaming player with full broadcast support
+
+echo "=== Installing RPI Player Dependencies ==="
+
+# Install system dependencies
+apt-get update
+apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    nginx \
+    ffmpeg \
+    libavcodec-dev \
+    libavformat-dev \
+    libavutil-dev \
+    libswscale-dev \
+    libavresample-dev \
+    pkg-config \
+    cmake \
+    build-essential \
+    git \
+    wget \
+    curl \
+    unzip \
+    v4l-utils \
+    libv4l-dev \
+    libdrm-dev \
+    libgbm-dev \
+    libgles2-mesa-dev \
+    libegl1-mesa-dev \
+    libasound2-dev \
+    libpulse-dev \
+    libx11-dev \
+    libxrandr-dev \
+    libxinerama-dev \
+    libxcursor-dev \
+    libxi-dev \
+    libxss-dev \
+    libxtst-dev \
+    libgtk-3-dev \
+    libgstreamer1.0-dev \
+    libgstreamer-plugins-base1.0-dev \
+    gstreamer1.0-plugins-ugly \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-libav \
+    gstreamer1.0-tools \
+    omxplayer \
+    libomxil-bellagio-dev \
+    libilbc-dev \
+    libopus-dev \
+    libvpx-dev \
+    libx264-dev \
+    libx265-dev \
+    libfdk-aac-dev \
+    libmp3lame-dev \
+    libshine-dev \
+    libsrt-dev \
+    librtmp-dev \
+    libssl-dev \
+    libcurl4-openssl-dev
+
+# Install Python dependencies
+install -v -m 644 files/requirements.txt "${ROOTFS_DIR}/tmp/"
+on_chroot << EOF
+pip3 install --upgrade pip
+pip3 install -r /tmp/requirements.txt
+rm /tmp/requirements.txt
+EOF
+
+# Create RPI Player user and directories
+on_chroot << EOF
+useradd -m -s /bin/bash rpiplayer
+usermod -a -G video,audio,render,gpio,i2c,spi rpiplayer
+mkdir -p /home/rpiplayer/rpi-player
+mkdir -p /home/rpiplayer/rpi-player/streams
+mkdir -p /home/rpiplayer/rpi-player/logs
+mkdir -p /home/rpiplayer/rpi-player/config
+chown -R rpiplayer:rpiplayer /home/rpiplayer/rpi-player
+EOF
+
+# Copy application files
+install -v -m 755 files/app.py "${ROOTFS_DIR}/home/rpiplayer/rpi-player/"
+install -v -m 644 files/config.py "${ROOTFS_DIR}/home/rpiplayer/rpi-player/"
+install -v -m 644 files/stream_decoder.py "${ROOTFS_DIR}/home/rpiplayer/rpi-player/"
+install -v -m 644 files/requirements.txt "${ROOTFS_DIR}/home/rpiplayer/rpi-player/"
+
+# Copy web interface files
+mkdir -p "${ROOTFS_DIR}/home/rpiplayer/rpi-player/templates"
+mkdir -p "${ROOTFS_DIR}/home/rpiplayer/rpi-player/static/css"
+mkdir -p "${ROOTFS_DIR}/home/rpiplayer/rpi-player/static/js"
+
+install -v -m 644 files/templates/index.html "${ROOTFS_DIR}/home/rpiplayer/rpi-player/templates/"
+install -v -m 644 files/static/css/style.css "${ROOTFS_DIR}/home/rpiplayer/rpi-player/static/css/"
+install -v -m 644 files/static/js/app.js "${ROOTFS_DIR}/home/rpiplayer/rpi-player/static/js/"
+
+# Set ownership
+on_chroot << EOF
+chown -R rpiplayer:rpiplayer /home/rpiplayer/rpi-player
+EOF
+
+echo "=== Configuring Video Output Options ==="
+
+# Configure boot config for multiple video outputs
+install -v -m 644 files/config.txt "${ROOTFS_DIR}/boot/"
+
+# Configure audio
+install -v -m 644 files/asound.conf "${ROOTFS_DIR}/etc/"
+
+# Install systemd service
+install -v -m 644 files/rpi-player.service "${ROOTFS_DIR}/etc/systemd/system/"
+install -v -m 644 files/nginx.conf "${ROOTFS_DIR}/etc/nginx/sites-available/rpi-player"
+
+on_chroot << EOF
+# Enable services
+systemctl daemon-reload
+systemctl enable rpi-player.service
+systemctl enable nginx
+
+# Configure nginx
+rm -f /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/rpi-player /etc/nginx/sites-enabled/
+systemctl restart nginx
+
+# Add to startup applications for desktop
+mkdir -p /etc/xdg/autostart
+cp /usr/share/applications/omxplayer.desktop /etc/xdg/autostart/ 2>/dev/null || true
+EOF
+
+echo "=== Setting up Broadcast Configuration ==="
+
+# Create broadcast configuration scripts
+install -v -m 755 files/broadcast-config.sh "${ROOTFS_DIR}/home/rpiplayer/rpi-player/"
+install -v -m 755 files/video-output-selector.sh "${ROOTFS_DIR}/home/rpiplayer/rpi-player/"
+install -v -m 755 files/stream-test.sh "${ROOTFS_DIR}/home/rpiplayer/rpi-player/"
+
+on_chroot << EOF
+chown rpiplayer:rpiplayer /home/rpiplayer/rpi-player/*.sh
+chmod +x /home/rpiplayer/rpi-player/*.sh
+EOF
+
+echo "=== RPI Player Installation Complete ==="

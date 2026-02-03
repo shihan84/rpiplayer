@@ -1,0 +1,321 @@
+#!/bin/bash -e
+
+# FFmpeg Build Script with Hardware Acceleration
+# Optimized for Raspberry Pi 3 streaming
+
+echo "=== Building FFmpeg with Hardware Acceleration ==="
+
+# Install build dependencies
+apt-get update
+apt-get install -y \
+    build-essential \
+    cmake \
+    git \
+    nasm \
+    pkg-config \
+    libx264-dev \
+    libx265-dev \
+    libvpx-dev \
+    libfdk-aac-dev \
+    libmp3lame-dev \
+    libopus-dev \
+    libsrt-dev \
+    librtmp-dev \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    libdrm-dev \
+    libgbm-dev \
+    libgles2-mesa-dev \
+    libegl1-mesa-dev \
+    libasound2-dev \
+    libpulse-dev
+
+# Create build directory
+BUILD_DIR="/tmp/ffmpeg-build"
+mkdir -p "$BUILD_DIR"
+cd "$BUILD_DIR"
+
+# Download FFmpeg source
+FFMPEG_VERSION="5.1.2"
+wget "https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.gz"
+tar -xzf "ffmpeg-${FFMPEG_VERSION}.tar.gz"
+cd "ffmpeg-${FFMPEG_VERSION}"
+
+# Configure FFmpeg with Raspberry Pi optimizations
+./configure \
+    --prefix=/usr/local \
+    --enable-gpl \
+    --enable-version3 \
+    --enable-nonfree \
+    --enable-static \
+    --enable-shared \
+    --enable-optimizations \
+    --enable-pic \
+    --enable-libx264 \
+    --enable-libx265 \
+    --enable-libvpx \
+    --enable-libfdk-aac \
+    --enable-libmp3lame \
+    --enable-libopus \
+    --enable-libsrt \
+    --enable-librtmp \
+    --enable-openssl \
+    --enable-libcurl \
+    --enable-demuxer=srt \
+    --enable-muxer=srt \
+    --enable-demuxer=rtmp \
+    --enable-muxer=rtmp \
+    --enable-demuxer=rtsp \
+    --enable-muxer=rtsp \
+    --enable-demuxer=hls \
+    --enable-muxer=hls \
+    --enable-demuxer=udp \
+    --enable-muxer=udp \
+    --enable-demuxer=rtp \
+    --enable-muxer=rtp \
+    --enable-protocol=srt \
+    --enable-protocol=rtmp \
+    --enable-protocol=rtsp \
+    --enable-protocol=udp \
+    --enable-protocol=tcp \
+    --enable-protocol=http \
+    --enable-protocol=https \
+    --enable-protocol=file \
+    --enable-filter=aresample \
+    --enable-filter=volume \
+    --enable-filter=scale \
+    --enable-filter=overlay \
+    --enable-filter=drawtext \
+    --enable-encoder=libx264 \
+    --enable-encoder=libx265 \
+    --enable-encoder=libvpx_vp8 \
+    --enable-encoder=libvpx_vp9 \
+    --enable-encoder=libfdk_aac \
+    --enable-encoder=libmp3lame \
+    --enable-encoder=libopus \
+    --enable-encoder=h264_v4l2m2m \
+    --enable-encoder=h264_omx \
+    --enable-encoder=h264_vaapi \
+    --enable-decoder=h264_v4l2m2m \
+    --enable-decoder=h264_omx \
+    --enable-decoder=h264_vaapi \
+    --enable-decoder=hevc_v4l2m2m \
+    --enable-decoder=mpeg4_v4l2m2m \
+    --enable-decoder=vp8_v4l2m2m \
+    --enable-decoder=vp9_v4l2m2m \
+    --enable-hwaccel=h264_v4l2m2m \
+    --enable-hwaccel=hevc_v4l2m2m \
+    --enable-hwaccel=h264_vaapi \
+    --enable-hwaccel=hevc_vaapi \
+    --enable-omx \
+    --enable-omx-rpi \
+    --enable-rpi \
+    --enable-mmal \
+    --enable-v4l2-m2m \
+    --enable-vaapi \
+    --enable-drm \
+    --enable-epoll \
+    --enable-pthreads \
+    --enable-network \
+    --enable-indev=v4l2 \
+    --enable-indev=alsa \
+    --enable-outdev=v4l2 \
+    --enable-outdev=alsa \
+    --enable-avfilter \
+    --enable-avresample \
+    --enable-swscale \
+    --enable-postproc \
+    --enable-swresample \
+    --enable-cross-compile \
+    --arch=armv7l \
+    --cpu=cortex-a53 \
+    --target-os=linux \
+    --extra-cflags='-I/opt/vc/include -I/usr/include/SDL2 -mfpu=neon-vfpv4 -mfloat-abi=hard' \
+    --extra-ldflags='-L/opt/vc/lib -mfpu=neon-vfpv4 -mfloat-abi=hard' \
+    --extra-libs='-lm -lpthread -lrt -ldl -lX11 -lasound -lSDL2 -lpulse -lmmal -lvcos -lbcm_host -lvchiq_arm -lmmal_core -lmmal_util -lmmal_vc_client'
+
+# Build FFmpeg
+make -j$(nproc)
+make install
+
+# Install system-wide FFmpeg
+make install
+
+# Update library cache
+ldconfig
+
+# Create FFmpeg configuration for RPI Player
+mkdir -p "${ROOTFS_DIR}/etc/ffmpeg"
+cat > "${ROOTFS_DIR}/etc/ffmpeg/ffmpeg.conf" << 'EOF'
+# FFmpeg Configuration for RPI Player
+[hwaccel]
+h264_v4l2m2m = enabled
+hevc_v4l2m2m = enabled
+h264_vaapi = enabled
+hevc_vaapi = enabled
+
+[protocols]
+srt = enabled
+rtmp = enabled
+rtsp = enabled
+hls = enabled
+udp = enabled
+tcp = enabled
+http = enabled
+https = enabled
+
+[encoders]
+libx264 = enabled
+libx265 = enabled
+libvpx_vp8 = enabled
+libvpx_vp9 = enabled
+libfdk_aac = enabled
+libmp3lame = enabled
+libopus = enabled
+h264_v4l2m2m = enabled
+h264_omx = enabled
+
+[decoders]
+h264_v4l2m2m = enabled
+hevc_v4l2m2m = enabled
+h264_vaapi = enabled
+hevc_vaapi = enabled
+h264_omx = enabled
+mpeg4_v4l2m2m = enabled
+vp8_v4l2m2m = enabled
+vp9_v4l2m2m = enabled
+EOF
+
+# Create FFmpeg presets for streaming
+mkdir -p "${ROOTFS_DIR}/usr/local/share/ffmpeg"
+
+# High quality streaming preset
+cat > "${ROOTFS_DIR}/usr/local/share/ffmpeg/h264_streaming.ffpreset" << 'EOF'
+# High quality H264 streaming preset
+coder=1
+flags=+loop
+cmp=+chroma
+partitions=+parti8x8+parti4x4+partp8x8+partp4x4
+me_method=hex
+subq=7
+me_range=16
+g=250
+keyint_min=25
+sc_threshold=40
+i_qfactor=0.71
+b_strategy=1
+qcomp=0.6
+qmin=10
+qmax=51
+qdiff=4
+bf=3
+refs=5
+directpred=3
+trellis=1
+flags2=+bpyramid+mixed_refs+wpred+dct8x8+fastpskip
+wpredp=2
+rc_init_occupancy=0
+rc_buffer_aggressivity=0.95
+threads=0
+sliced_threads=0
+nr=0
+decimate=1
+interlaced=0
+bluray_compat=0
+constrained_intra=0
+bframes=3
+b_pyramid=2
+weightb=1
+open_gop=0
+weightp=2
+keyint=250
+keyint_min=25
+scenecut=40
+intra_refresh=0
+rc_lookahead=40
+rc=crf
+mbtree=1
+crf=23.0
+qcomp=0.60
+qpmin=0
+qpmax=69
+qpstep=4
+ip_ratio=1.40
+aq=1
+EOF
+
+# Low latency streaming preset
+cat > "${ROOTFS_DIR}/usr/local/share/ffmpeg/h264_lowlatency.ffpreset" << 'EOF'
+# Low latency H264 streaming preset
+coder=1
+flags=+loop
+cmp=+chroma
+partitions=+parti8x8+parti4x4+partp8x8+partp4x4
+me_method=hex
+subq=6
+me_range=16
+g=60
+keyint_min=30
+sc_threshold=40
+i_qfactor=0.71
+b_strategy=1
+qcomp=0.6
+qmin=16
+qmax=51
+qdiff=4
+bf=1
+refs=3
+directpred=3
+trellis=1
+flags2=+bpyramid+mixed_refs+wpred+dct8x8+fastpskip
+wpredp=2
+rc_init_occupancy=0
+rc_buffer_aggressivity=1.0
+threads=0
+sliced_threads=0
+nr=0
+decimate=1
+interlaced=0
+bluray_compat=0
+constrained_intra=0
+bframes=1
+b_pyramid=0
+weightb=1
+open_gop=0
+weightp=2
+keyint=60
+keyint_min=30
+scenecut=40
+intra_refresh=0
+rc_lookahead=20
+rc=crf
+mbtree=0
+crf=25.0
+qcomp=0.70
+qpmin=0
+qpmax=69
+qpstep=4
+ip_ratio=1.20
+aq=1
+tune=zerolatency
+EOF
+
+# Clean up build files
+cd /
+rm -rf "$BUILD_DIR"
+
+echo "=== FFmpeg build complete ==="
+echo "Hardware acceleration enabled:"
+echo "  - h264_v4l2m2m (Video4Linux2 Memory-to-Memory)"
+echo "  - h264_omx (OpenMAX)"
+echo "  - h264_vaapi (Video Acceleration API)"
+echo "  - hevc_v4l2m2m (H.265/HEVC)"
+echo ""
+echo "Streaming protocols enabled:"
+echo "  - SRT (Secure Reliable Transport)"
+echo "  - RTMP (Real-Time Messaging Protocol)"
+echo "  - RTSP (Real-Time Streaming Protocol)"
+echo "  - HLS (HTTP Live Streaming)"
+echo "  - UDP (User Datagram Protocol)"
+echo "  - TCP (Transmission Control Protocol)"
+echo "  - HTTP/HTTPS"

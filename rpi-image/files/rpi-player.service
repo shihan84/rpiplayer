@@ -1,0 +1,31 @@
+[Unit]
+Description=RPI Stream Player Service
+After=network.target nginx.service
+Wants=network.target
+
+[Service]
+Type=simple
+User=rpiplayer
+Group=rpiplayer
+WorkingDirectory=/home/rpiplayer/rpi-player
+Environment=PYTHONPATH=/home/rpiplayer/rpi-player
+Environment=FLASK_ENV=production
+ExecStart=/usr/bin/python3 app.py
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=always
+RestartSec=10
+
+# Security settings
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/home/rpiplayer/rpi-player/streams /home/rpiplayer/rpi-player/logs /tmp
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictRealtime=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,375 @@
+#!/bin/bash -e
+
+# Network Configuration Stage for RPI Player
+# Install and configure network management tools
+
+echo "=== Installing Network Management Components ==="
+
+# Install network packages
+apt-get install -y \
+    hostapd \
+    dnsmasq \
+    wpa_supplicant \
+    wireless-tools \
+    iw \
+    ethtool \
+    net-tools \
+    iproute2 \
+    curl \
+    wget \
+    dnsutils \
+    iptables \
+    iputils-ping \
+    traceroute \
+    nmap \
+    tcpdump \
+    vnstat \
+    iftop \
+    nethogs \
+    bridge-utils \
+    vlan \
+    ppp \
+    pptp-linux \
+    openvpn \
+    wireguard \
+    avahi-daemon \
+    avahi-utils
+
+# Configure network interfaces
+mkdir -p "${ROOTFS_DIR}/etc/network/interfaces.d"
+
+# Create default network configuration
+cat > "${ROOTFS_DIR}/etc/network/interfaces.d/rpi-player" << 'EOF'
+# RPI Player Network Configuration
+
+# Ethernet interface
+auto eth0
+allow-hotplug eth0
+iface eth0 inet dhcp
+    metric 0
+
+# WiFi interface (client mode)
+auto wlan0
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+    wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+    metric 1
+
+# WiFi interface (AP mode - disabled by default)
+iface wlan0 inet static
+    address 192.168.100.1
+    netmask 255.255.255.0
+    metric 2
+EOF
+
+# Configure wpa_supplicant
+mkdir -p "${ROOTFS_DIR}/etc/wpa_supplicant"
+
+cat > "${ROOTFS_DIR}/etc/wpa_supplicant/wpa_supplicant.conf" << 'EOF'
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=US
+
+# RPI Player networks will be added here
+EOF
+
+# Configure hostapd (Access Point)
+mkdir -p "${ROOTFS_DIR}/etc/hostapd"
+
+cat > "${ROOTFS_DIR}/etc/hostapd/hostapd.conf" << 'EOF'
+# RPI Player Access Point Configuration
+interface=wlan0
+driver=nl80211
+ssid=RPI-Player
+hw_mode=g
+channel=6
+wmm_enabled=0
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=rpiplayer123
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+EOF
+
+# Configure dnsmasq (DHCP and DNS)
+cat > "${ROOTFS_DIR}/etc/dnsmasq.conf" << 'EOF'
+# RPI Player DNS and DHCP Configuration
+
+# Listen on WiFi interface
+interface=wlan0
+bind-interfaces
+
+# DHCP configuration
+dhcp-range=192.168.100.100,192.168.100.200,12h
+dhcp-option=3,192.168.100.1
+dhcp-option=6,192.168.100.1,8.8.8.8
+
+# DNS configuration
+server=8.8.8.8
+server=8.8.4.4
+cache-size=1000
+
+# Domain
+domain=local
+local=/local/
+expand-hosts
+
+# Logging
+log-queries
+log-dhcp
+EOF
+
+# Configure network optimization
+cat >> "${ROOTFS_DIR}/etc/sysctl.conf" << 'EOF'
+
+# Network optimization for streaming
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+net.ipv4.tcp_rmem = 4096 87380 16777216
+net.ipv4.tcp_wmem = 4096 65536 16777216
+net.ipv4.tcp_congestion_control = bbr
+net.core.netdev_max_backlog = 5000
+net.ipv4.tcp_slow_start_after_idle = 0
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.ip_forward = 1
+EOF
+
+# Create network management scripts
+install -v -m 755 files/network-manager.sh "${ROOTFS_DIR}/home/rpiplayer/rpi-player/"
+install -v -m 755 files/network-diagnostics.sh "${ROOTFS_DIR}/home/rpiplayer/rpi-player/"
+install -v -m 755 files/network-optimizer.sh "${ROOTFS_DIR}/home/rpiplayer/rpi-player/"
+
+# Create network configuration directory
+mkdir -p "${ROOTFS_DIR}/etc/rpi-player"
+
+# Create default network configuration
+cat > "${ROOTFS_DIR}/etc/rpi-player/network.conf" << 'EOF'
+# RPI Player Network Configuration
+MODE=client
+WIFI_SSID=""
+WIFI_PASSWORD=""
+WIFI_COUNTRY="US"
+AP_SSID="RPI-Player"
+AP_PASSWORD="rpiplayer123"
+AP_CHANNEL="6"
+AP_IP="192.168.100.1"
+AP_RANGE="192.168.100.100,192.168.100.200,12h"
+ETH_METHOD=dhcp
+ETH_IP=""
+ETH_NETMASK=""
+ETH_GATEWAY=""
+ETH_DNS=""
+DNS_SERVERS="8.8.8.8,8.8.4.4"
+NTP_SERVERS="0.pool.ntp.org,1.pool.ntp.org"
+STREAMING_OPTIMIZATION=true
+EOF
+
+# Configure systemd services for network management
+
+# Create network manager service
+cat > "${ROOTFS_DIR}/etc/systemd/system/rpi-player-network.service" << 'EOF'
+[Unit]
+Description=RPI Player Network Manager
+After=network.target
+Wants=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/home/rpiplayer/rpi-player/network-optimizer.sh
+ExecStart=/home/rpiplayer/rpi-player/network-diagnostics.sh --startup
+TimeoutSec=30
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Create network monitoring service
+cat > "${ROOTFS_DIR}/etc/systemd/system/rpi-player-network-monitor.service" << 'EOF'
+[Unit]
+Description=RPI Player Network Monitor
+After=network.target rpi-player.service
+Wants=network.target
+
+[Service]
+Type=simple
+User=rpiplayer
+Group=rpiplayer
+WorkingDirectory=/home/rpiplayer/rpi-player
+Environment=PYTHONPATH=/home/rpiplayer/rpi-player
+ExecStart=/usr/bin/python3 -c "
+import sys
+sys.path.append('/home/rpiplayer/rpi-player')
+from network_monitor import NetworkMonitor
+from app import socketio
+monitor = NetworkMonitor(socketio)
+monitor.start_monitoring()
+"
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Configure hostapd service
+sed -i 's/#DAEMON_CONF=/DAEMON_CONF=\/etc\/hostapd\/hostapd.conf/' "${ROOTFS_DIR}/etc/default/hostapd"
+
+# Create network initialization script
+cat > "${ROOTFS_DIR}/etc/rc.local" << 'EOF'
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+
+# Network optimizations for streaming
+echo 'bbr' > /proc/sys/net/ipv4/tcp_congestion_control 2>/dev/null || true
+echo 10000 > /proc/sys/net/core/netdev_max_backlog 2>/dev/null || true
+
+# Restore iptables if exists
+if [ -f /etc/iptables.ipv4.nat ]; then
+    iptables-restore < /etc/iptables.ipv4.nat
+fi
+
+# Configure interface optimizations
+for interface in eth0 wlan0; do
+    if ip link show $interface >/dev/null 2>&1; then
+        # Increase txqueuelen
+        ifconfig $interface txqueuelen 10000 2>/dev/null || true
+        
+        # Disable WiFi power management
+        iwconfig $interface power off 2>/dev/null || true
+    fi
+done
+
+# Start RPI Player network services
+/home/rpiplayer/rpi-player/network-optimizer.sh --silent
+
+exit 0
+EOF
+
+chmod +x "${ROOTFS_DIR}/etc/rc.local"
+
+# Configure udev rules for network interfaces
+cat > "${ROOTFS_DIR}/etc/udev/rules.d/99-rpi-player-network.rules" << 'EOF'
+# RPI Player Network Interface Rules
+
+# Set interface priorities
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="eth0", RUN+="/usr/bin/ip link set eth0 metric 0"
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="wlan0", RUN+="/usr/bin/ip link set wlan0 metric 1"
+
+# Configure WiFi power management
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="wlan*", RUN+="/usr/sbin/iwconfig %k power off"
+
+# Set interface txqueuelen
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="eth*", RUN+="/sbin/ifconfig %k txqueuelen 10000"
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="wlan*", RUN+="/sbin/ifconfig %k txqueuelen 10000"
+EOF
+
+# Configure Avahi for network discovery
+sed -i 's/#host-name=host-name/host-name=rpi-player/' "${ROOTFS_DIR}/etc/avahi/avahi-daemon.conf"
+sed -i 's/#publish-workstation=yes/publish-workstation=yes/' "${ROOTFS_DIR}/etc/avahi/avahi-daemon.conf"
+
+# Enable services
+on_chroot << EOF
+systemctl daemon-reload
+systemctl enable rpi-player-network.service
+systemctl enable rpi-player-network-monitor.service
+systemctl enable avahi-daemon
+systemctl enable hostapd
+systemctl enable dnsmasq
+EOF
+
+# Create network backup and restore scripts
+cat > "${ROOTFS_DIR}/home/rpiplayer/rpi-player/network-backup.sh" << 'EOF'
+#!/bin/bash
+
+# Network Configuration Backup and Restore
+
+BACKUP_DIR="/home/rpiplayer/rpi-player/backups"
+CONFIG_FILES=(
+    "/etc/network/interfaces.d/"
+    "/etc/wpa_supplicant/"
+    "/etc/hostapd/"
+    "/etc/dnsmasq.conf"
+    "/etc/sysctl.conf"
+    "/etc/rpi-player/network.conf"
+    "/etc/iptables.ipv4.nat"
+)
+
+backup_network() {
+    local timestamp=$(date +%Y%m%d_%H%M%S)
+    local backup_file="$BACKUP_DIR/network-config-$timestamp.tar.gz"
+    
+    mkdir -p "$BACKUP_DIR"
+    
+    echo "Creating network backup: $backup_file"
+    
+    tar -czf "$backup_file" "${CONFIG_FILES[@]}" 2>/dev/null || true
+    
+    echo "Network configuration backed up successfully"
+    echo "Backup file: $backup_file"
+}
+
+restore_network() {
+    echo "Available backups:"
+    ls -1 "$BACKUP_DIR"/network-config-*.tar.gz 2>/dev/null | nl
+    
+    read -p "Select backup to restore: " backup_num
+    
+    backup_file=$(ls -1 "$BACKUP_DIR"/network-config-*.tar.gz 2>/dev/null | sed -n "${backup_num}p")
+    
+    if [ -f "$backup_file" ]; then
+        echo "Restoring from: $backup_file"
+        
+        # Stop network services
+        systemctl stop networking
+        systemctl stop wpa_supplicant
+        systemctl stop hostapd
+        systemctl stop dnsmasq
+        
+        # Extract backup
+        tar -xzf "$backup_file" -C /
+        
+        # Restart network services
+        systemctl restart networking
+        systemctl restart wpa_supplicant
+        systemctl restart hostapd
+        systemctl restart dnsmasq
+        
+        echo "Network configuration restored successfully"
+    else
+        echo "Invalid backup selection"
+        exit 1
+    fi
+}
+
+case "${1:-backup}" in
+    backup)
+        backup_network
+        ;;
+    restore)
+        restore_network
+        ;;
+    *)
+        echo "Usage: $0 [backup|restore]"
+        exit 1
+        ;;
+esac
+EOF
+
+chmod +x "${ROOTFS_DIR}/home/rpiplayer/rpi-player/network-backup.sh"
+
+# Set ownership
+on_chroot << EOF
+chown -R rpiplayer:rpiplayer /home/rpiplayer/rpi-player/network-*.sh
+chmod +x /home/rpiplayer/rpi-player/network-*.sh
+EOF
+
+echo "=== Network Configuration Complete ==="

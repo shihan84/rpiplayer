@@ -1,0 +1,214 @@
+name: Build Raspberry Pi Image
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      rpi_model:
+        description: 'Raspberry Pi Model'
+        required: true
+        default: 'rpi3'
+        type: choice
+        options:
+        - rpi3
+        - rpi4
+        - rpi5
+      output_format:
+        description: 'Output Format'
+        required: true
+        default: 'img'
+        type: choice
+        options:
+        - img
+        - iso
+        - tar.gz
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup QEMU for ARM emulation
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y qemu-user-static binfmt-support
+        
+    - name: Install pi-gen dependencies
+      run: |
+        sudo apt-get install -y \
+          coreutils quilt parted qemu-user-static debootstrap zerofree \
+          zip dosfstools bsdtar libcap2-bin rsync xz-utils kpartx \
+          git bc build-essential binutils-aarch64-linux-gnu \
+          device-tree-compiler raspberrypi-bootloader \
+          ca-certificates curl gnupg
+        
+    - name: Clone pi-gen
+      run: |
+        git clone --depth 1 --branch master https://github.com/RPi-Distro/pi-gen.git
+        cd pi-gen
+        git submodule update --init
+        
+    - name: Configure pi-gen for RPI Player
+      run: |
+        cd pi-gen
+        
+        # Create config file
+        cat > config << EOF
+        IMG_NAME=rpi-player
+        TARGET_BOOT_SIZE=256
+        APT_PROXY=
+        ENABLE_SSH=1
+        ENABLE_NONFREE=1
+        ENABLE_MINIMAL=1
+        ENABLE_HEADLESS=0
+        ENABLE_XORG=1
+        ENABLE_WM=1
+        ENABLE_RPI_XORG=1
+        ENABLE_SOUND=1
+        ENABLE_DBUS=1
+        ENABLE_PI_BPLUS=1
+        ENABLE_PI_ZERO=1
+        ENABLE_PI_ZERO_W=1
+        ENABLE_PI2=1
+        ENABLE_PI3=1
+        ENABLE_PI4=1
+        ENABLE_PI400=1
+        ENABLE_CM4=1
+        EOF
+        
+        # Set up stage customization
+        echo "IMG_NAME=rpi-player" >> config
+        echo "TARGET_BOOT_SIZE=256" >> config
+        echo "ENABLE_SSH=1" >> config
+        echo "ENABLE_NONFREE=1" >> config
+        
+    - name: Add RPI Player customization stages
+      run: |
+        cd pi-gen
+        
+        # Create stage for RPI Player
+        mkdir -p stage-rpi-player
+        
+        # Copy our customization scripts
+        cp -r ../rpi-image/* stage-rpi-player/
+        
+        # Create stage list
+        cat > stage-list << EOF
+        stage0
+        stage1
+        stage2
+        stage3
+        stage4
+        stage5
+        stage-rpi-player
+        EOF
+        
+        # Export stage list
+        export STAGE_LIST="stage0 stage1 stage2 stage3 stage4 stage5 stage-rpi-player"
+        
+    - name: Build Raspberry Pi OS image
+      run: |
+        cd pi-gen
+        sudo ./build.sh
+        
+    - name: Optimize image for RPI3
+      run: |
+        cd pi-gen/deploy
+        
+        # Find the built image
+        IMAGE_FILE=$(ls rpi-player*.img | head -1)
+        
+        if [ -n "$IMAGE_FILE" ]; then
+          # Resize image to optimal size for RPI3
+          echo "Optimizing image for RPI3..."
+          
+          # Add RPI3 specific optimizations
+          sudo mount -o loop,offset=$((512*8192)) "$IMAGE_FILE" /mnt || true
+          
+          # Add boot config optimizations
+          if [ -d /mnt ]; then
+            cat >> /mnt/config.txt << EOF
+            
+            # RPI3 Optimizations for Streaming
+            gpu_mem=256
+            hdmi_force_hotplug=1
+            hdmi_drive=2
+            config_hdmi_boost=4
+            disable_splash=1
+            avoid_warnings=1
+            max_framebuffers=1
+            disable_overscan=1
+            framebuffer_depth=32
+            framebuffer_ignore_alpha=1
+            
+            # Hardware acceleration
+            start_x=1
+            dtoverlay=vc4-kms-v3d
+            dtoverlay=vc4-fkms-v3d
+            
+            # Audio
+            dtparam=audio=on
+            EOF
+            
+            sudo umount /mnt || true
+          fi
+          
+          # Compress the image
+          gzip -c "$IMAGE_FILE" > "${IMAGE_FILE}.gz"
+          
+          # Generate checksum
+          sha256sum "$IMAGE_FILE" > "${IMAGE_FILE}.sha256"
+          sha256sum "${IMAGE_FILE}.gz" > "${IMAGE_FILE}.gz.sha256"
+        fi
+        
+    - name: Upload image artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: rpi-player-image
+        path: |
+          pi-gen/deploy/rpi-player*.img
+          pi-gen/deploy/rpi-player*.img.gz
+          pi-gen/deploy/rpi-player*.sha256
+        retention-days: 30
+        
+    - name: Create Release
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          pi-gen/deploy/rpi-player*.img.gz
+          pi-gen/deploy/rpi-player*.sha256
+        name: RPI Player Image ${{ github.run_number }}
+        tag: v${{ github.run_number }}
+        draft: false
+        prerelease: false
+        body: |
+          Raspberry Pi 3 streaming player image with:
+          - SRT, RTMP, UDP stream support
+          - Hardware-accelerated video decoding
+          - Web-based GUI interface
+          - Broadcast video output options (HDMI, composite)
+          - Auto-start service configuration
+          
+          ## Installation:
+          1. Download the `.img.gz` file
+          2. Extract using: `gunzip rpi-player-*.img.gz`
+          3. Flash to SD card using Raspberry Pi Imager
+          4. Boot your Raspberry Pi 3
+          5. Access web interface at: `http://rpi-player.local:5000`
+          
+          ## Default Settings:
+          - SSH: Enabled (user: pi, password: raspberry)
+          - Web Interface: http://localhost:5000
+          - Streams folder: /home/pi/rpi-player/streams
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

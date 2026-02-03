@@ -1,0 +1,196 @@
+#!/bin/bash -e
+
+# Disable Raspberry Pi Splash Screen
+# Remove all boot splash screens and logos for professional streaming appearance
+
+echo "=== Configuring Splash Screen Settings ==="
+
+# Disable Plymouth (if installed)
+if command -v plymouth >/dev/null 2>&1; then
+    echo "Disabling Plymouth splash screen..."
+    systemctl disable plymouth 2>/dev/null || true
+    systemctl mask plymouth 2>/dev/null || true
+fi
+
+# Remove splash screen packages
+apt-get remove -y plymouth plymouth-theme-* 2>/dev/null || true
+
+# Configure boot splash settings
+sed -i 's/^splash/#splash/' "${ROOTFS_DIR}/etc/default/grub" 2>/dev/null || true
+sed -i 's/^quiet/#quiet/' "${ROOTFS_DIR}/etc/default/grub" 2>/dev/null || true
+
+# Create silent boot configuration
+cat > "${ROOTFS_DIR}/etc/default/grub" << 'EOF'
+# Disable splash screen for silent boot
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=0
+GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+GRUB_CMDLINE_LINUX_DEFAULT="console=tty1 console=ttyAMA0,115200n8 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait logo.nologo quiet"
+GRUB_CMDLINE_LINUX="console=tty1 console=ttyAMA0,115200n8 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait logo.nologo quiet"
+EOF
+
+# Configure cmdline.txt for silent boot
+if [ -f "${ROOTFS_DIR}/boot/cmdline.txt" ]; then
+    # Backup original
+    cp "${ROOTFS_DIR}/boot/cmdline.txt" "${ROOTFS_DIR}/boot/cmdline.txt.backup"
+    
+    # Create silent boot cmdline
+    cat > "${ROOTFS_DIR}/boot/cmdline.txt" << 'EOF'
+console=tty1 console=ttyAMA0,115200n8 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline rootwait logo.nologo quiet splash=off loglevel=0 vt.global_cursor_default=0
+EOF
+fi
+
+# Disable getty on tty1 (prevent login prompt)
+sed -i 's/^NAutoVTs=.*/NAutoVTs=0/' "${ROOTFS_DIR}/etc/systemd/logind.conf" 2>/dev/null || true
+sed -i 's/^ReserveVT=.*/ReserveVT=6/' "${ROOTFS_DIR}/etc/systemd/logind.conf" 2>/dev/null || true
+
+# Mask getty@tty1 service
+mkdir -p "${ROOTFS_DIR}/etc/systemd/system/getty@tty1.service.d"
+cat > "${ROOTFS_DIR}/etc/systemd/system/getty@tty1.service.d/override.conf" << 'EOF'
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --noclear --keep-baud console 115200,38400,9600 $TERM
+EOF
+
+# Disable console messages
+echo 'kernel.printk = 0 0 0 0' > "${ROOTFS_DIR}/etc/sysctl.d/99-silent.conf"
+
+# Remove rainbow splash screen
+sed -i 's/^disable_splash=.*/disable_splash=1/' "${ROOTFS_DIR}/boot/config.txt"
+sed -i 's/^disable_boot_splash=.*/disable_boot_splash=1/' "${ROOTFS_DIR}/boot/config.txt"
+
+# Add additional splash disable settings
+cat >> "${ROOTFS_DIR}/boot/config.txt" << 'EOF'
+
+# Complete splash screen disable
+logo.nologo=1
+boot_delay=0
+silent_level=1
+disable_display_title=1
+disable_camera_led=1
+avoid_warnings=1
+EOF
+
+# Create custom splash screen service (black screen)
+cat > "${ROOTFS_DIR}/etc/systemd/system/rpi-player-splash.service" << 'EOF'
+[Unit]
+Description=RPI Player Splash Screen
+DefaultDependencies=no
+After=local-fs.target
+Before=sysinit.target
+ConditionPathExists=!/proc/1/environ
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/fbset -depth 8
+ExecStart=/usr/bin/fbset -depth 16
+ExecStart=/usr/bin/fbset -depth 32
+ExecStart=/usr/bin/dd if=/dev/zero of=/dev/fb0 bs=1024 count=768 2>/dev/null
+ExecStart=/usr/bin/setterm -blank 0 -powersave off -powerdown 0 >/dev/tty1 2>&1 || true
+
+[Install]
+WantedBy=sysinit.target
+EOF
+
+# Enable splash service
+on_chroot << EOF
+systemctl daemon-reload
+systemctl enable rpi-player-splash.service
+EOF
+
+# Create framebuffer clear script
+cat > "${ROOTFS_DIR}/usr/local/bin/clear-screen" << 'EOF'
+#!/bin/bash
+# Clear screen to black for professional appearance
+
+# Clear framebuffer
+dd if=/dev/zero of=/dev/fb0 bs=1024 count=768 2>/dev/null || true
+
+# Disable cursor
+setterm -cursor off >/dev/tty1 2>&1 || true
+
+# Disable screen blanking
+setterm -blank 0 -powersave off -powerdown 0 >/dev/tty1 2>&1 || true
+
+# Set console to black background
+echo -e '\033[40m\033[2J\033[H' >/dev/tty1 2>&1 || true
+EOF
+
+chmod +x "${ROOTFS_DIR}/usr/local/bin/clear-screen"
+
+# Add screen clear to startup
+cat > "${ROOTFS_DIR}/etc/rc.local" << 'EOF'
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+
+# Clear screen immediately
+/usr/local/bin/clear-screen
+
+# Network optimizations for streaming
+echo 'bbr' > /proc/sys/net/ipv4/tcp_congestion_control 2>/dev/null || true
+echo 10000 > /proc/sys/net/core/netdev_max_backlog 2>/dev/null || true
+
+# Restore iptables if exists
+if [ -f /etc/iptables.ipv4.nat ]; then
+    iptables-restore < /etc/iptables.ipv4.nat
+fi
+
+# Configure interface optimizations
+for interface in eth0 wlan0; do
+    if ip link show $interface >/dev/null 2>&1; then
+        # Increase txqueuelen
+        ifconfig $interface txqueuelen 10000 2>/dev/null || true
+        
+        # Disable WiFi power management
+        iwconfig $interface power off 2>/dev/null || true
+    fi
+done
+
+# Start RPI Player network services
+/home/rpiplayer/rpi-player/network-optimizer.sh --silent
+
+exit 0
+EOF
+
+chmod +x "${ROOTFS_DIR}/etc/rc.local"
+
+# Disable login prompt on HDMI
+mkdir -p "${ROOTFS_DIR}/etc/systemd/system/getty@tty1.service.d"
+cat > "${ROOTFS_DIR}/etc/systemd/system/getty@tty1.service.d/nologin.conf" << 'EOF'
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin root --noclear %I $TERM
+EOF
+
+# Create silent boot service
+cat > "${ROOTFS_DIR}/etc/systemd/system/silent-boot.service" << 'EOF'
+[Unit]
+Description=Silent Boot Configuration
+DefaultDependencies=no
+After=local-fs.target
+Before=basic.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/setterm -blank 0 -powersave off -powerdown 0 >/dev/tty1 2>&1 || true
+ExecStart=/usr/bin/clear-screen
+
+[Install]
+WantedBy=basic.target
+EOF
+
+on_chroot << EOF
+systemctl daemon-reload
+systemctl enable silent-boot.service
+EOF
+
+echo "=== Splash Screen Configuration Complete ==="
+echo "All splash screens and boot messages have been disabled"
+echo "System will boot directly to black screen"

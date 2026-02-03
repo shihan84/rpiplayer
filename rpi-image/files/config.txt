@@ -1,0 +1,98 @@
+# RPI Player Video Configuration
+# Supports multiple broadcast output options
+
+# GPU Memory Allocation
+gpu_mem=256
+gpu_mem_256=128
+gpu_mem_512=192
+gpu_mem_1024=256
+
+# HDMI Configuration
+hdmi_force_hotplug=1
+hdmi_drive=2
+config_hdmi_boost=4
+hdmi_group=1
+hdmi_mode=16
+hdmi_pixel_encoding=1
+
+# Display Configuration
+disable_splash=1
+avoid_warnings=1
+max_framebuffers=1
+disable_overscan=1
+framebuffer_depth=32
+framebuffer_ignore_alpha=1
+
+# Disable all splash screens and boot messages
+disable_boot_splash=1
+disable_splash=1
+logo.nologo=1
+boot_delay=0
+silent_level=1
+disable_display_title=1
+
+# Hardware Acceleration
+start_x=1
+dtoverlay=vc4-kms-v3d
+dtoverlay=vc4-fkms-v3d,cma-256
+dtoverlay=vc4-v3d
+dtoverlay=vc4-cma
+
+# Audio Configuration
+dtparam=audio=on
+dtparam=i2s=on
+dtoverlay=i2s-mmap
+dtoverlay=i2s-dac
+
+# Camera Support (for streaming)
+start_x=1
+camera_auto_detect=1
+dtoverlay=imx219
+dtoverlay=imx477
+
+# Composite Video Output (RCA)
+enable_tvout=1
+sdtv_mode=0
+sdtv_aspect=1
+
+# Display Port Support (RPi4)
+enable_dp=1
+dtoverlay=vc4-kms-dpi
+
+# SPI and I2C for external displays
+dtparam=spi=on
+dtparam=i2c_arm=on
+dtoverlay=spi0-2cs
+dtoverlay=i2c0,bcm2708
+dtoverlay=i2c1,bcm2708
+
+# Performance Optimizations
+arm_freq=1400
+over_voltage=2
+sdram_freq=500
+core_freq=500
+
+# Network Performance
+dwc_otg.lpm_enable=0
+smsc95xx.turbo_mode=1
+
+# Boot Options
+boot_delay=0
+disable_boot_splash=1
+silent_level=1
+
+# Legacy Camera Support (if needed)
+dtoverlay=legacy-camera
+
+# Hardware Video Decoder
+dtoverlay=vc4-kms-v3d,no-audio
+dtoverlay=rpivid-v4l2
+
+# Additional Overlays for Streaming
+dtoverlay=vc4-kms-v3d-audio
+dtoverlay=audremap,pins_18_19
+dtoverlay=audremap,pins_12_13
+
+# HDMI-CEC Support
+enable_cec=1
+hdmi_ignore_cec_init=1
