@@ -1,0 +1,81 @@
+{
+  "name": "V-Player Enterprise",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "vplayer-enterprise",
+  "workspaceFolder": "/app",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.9",
+      "installTools": "true"
+    },
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/redis:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.flake8",
+        "ms-python.black-formatter",
+        "ms-python.debugger",
+        "ms-vscode.vscode-json",
+        "redhat.vscode-yaml",
+        "ms-vscode-remote.remote-containers",
+        "github.copilot",
+        "github.copilot-chat",
+        "ms-vscode.live-server"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.flake8Enabled": true,
+        "python.formatting.provider": "black",
+        "python.formatting.blackArgs": ["--line-length", "88"],
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": true
+        },
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/*.pyc": true,
+          "**/*.pyo": true,
+          "**/.git": true,
+          "**/.DS_Store": true,
+          "**/node_modules": true
+        }
+      }
+    }
+  },
+  "portsAttributes": {
+    "5005": {
+      "label": "V-Player Enterprise",
+      "onAutoForward": "notify"
+    },
+    "6379": {
+      "label": "Redis",
+      "onAutoForward": "silent"
+    }
+  },
+  "forwardPorts": [5005, 6379],
+  "postCreateCommand": {
+    "install": "pip install -r requirements.txt",
+    "setup": "python3 build_rpi_image.py",
+    "start": "python3 app.py"
+  },
+  "postStartCommand": {
+    "web": "python3 app.py"
+  },
+  "remoteUser": "root",
+  "mounts": [
+    "source=${localWorkspaceFolder}/logs,target=/app/logs,type=bind",
+    "source=${localWorkspaceFolder}/static,target=/app/static,type=bind",
+    "source=${localWorkspaceFolder}/templates,target=/app/templates,type=bind"
+  ],
+  "runArgs": ["--cap-add=SYS_ADMIN", "--security-opt=seccomp=unconfined"],
+  "remoteEnv": {
+    "PYTHONPATH": "/app",
+    "FLASK_ENV": "development",
+    "FLASK_DEBUG": "1"
+  }
+}
