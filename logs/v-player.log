@@ -13406,3 +13406,809 @@ OSError
 2026-02-04 04:43:52,634 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
 2026-02-04 04:43:54,481 ERROR network_monitor Error getting connection stats: (pid=52664)
 2026-02-04 04:43:54,500 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:43:58,024 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:43:58,046 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:43:59,761 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:43:59,779 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:03,261 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:03,296 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:05,028 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:05,045 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:08,567 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:08,589 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:10,307 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:10,317 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:13,909 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:13,918 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:15,557 ERROR network_monitor Error getting connection stats: (pid=65088)
+2026-02-04 04:44:15,573 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:19,156 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:19,167 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:20,845 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:20,852 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:24,423 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:24,435 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:26,100 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:26,108 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:29,865 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:29,874 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:31,346 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:31,351 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:35,111 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:35,144 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:36,604 ERROR network_monitor Error getting connection stats: (pid=65116)
+2026-02-04 04:44:36,621 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:40,391 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:40,400 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:41,858 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:41,867 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:45,658 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:45,674 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:47,079 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:47,086 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:50,980 ERROR network_monitor Error getting connection stats: (pid=65133)
+2026-02-04 04:44:50,990 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:52,323 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:52,333 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:56,240 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:56,251 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:44:57,569 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:44:57,576 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:01,446 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:01,453 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:02,824 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:02,833 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:06,719 ERROR network_monitor Error getting connection stats: (pid=65154)
+2026-02-04 04:45:06,754 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:08,067 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:08,076 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:12,070 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:12,082 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:13,420 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:13,432 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:17,341 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:17,351 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:18,690 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:18,700 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:22,581 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:22,587 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:23,941 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:23,951 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:27,832 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:27,900 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:29,181 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:29,188 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:33,276 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:33,292 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:34,424 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:34,432 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:38,624 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:38,635 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:39,599 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:39,615 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:43,894 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:43,905 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:44,871 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:44,883 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:49,162 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:49,170 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:50,144 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:50,155 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:54,440 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:54,451 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:55,353 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:55,365 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:45:59,676 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:45:59,687 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:00,594 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:46:00,616 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:05,007 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:46:05,019 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:05,820 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:46:05,832 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:10,224 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:10,235 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:11,142 ERROR network_monitor Error getting connection stats: (pid=65256)
+2026-02-04 04:46:11,154 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:15,475 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:15,485 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:16,381 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:16,386 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:20,710 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:20,720 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:21,619 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:21,636 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:26,209 ERROR network_monitor Error getting connection stats: (pid=65275)
+2026-02-04 04:46:26,219 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:26,835 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:26,847 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:31,443 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:31,454 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:32,094 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:32,104 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:36,734 ERROR network_monitor Error getting connection stats: (pid=65290)
+2026-02-04 04:46:36,755 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:37,306 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:37,317 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:42,043 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:42,057 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:42,575 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:42,585 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:47,275 ERROR network_monitor Error getting connection stats: (pid=65252)
+2026-02-04 04:46:47,285 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:47,814 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:46:47,820 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:52,511 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:46:52,520 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:53,065 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:46:53,072 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:57,742 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:46:57,752 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:46:58,294 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:46:58,304 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:02,981 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:02,987 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:03,571 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:03,583 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:08,231 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:08,239 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:08,800 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:08,808 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:13,486 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:13,500 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:14,020 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:14,034 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:18,726 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:18,736 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:19,295 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:19,303 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:23,955 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:23,967 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:24,526 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:24,536 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:29,209 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:29,220 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:29,786 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:29,796 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:34,472 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:34,484 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:35,000 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:35,070 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:39,687 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:39,700 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:40,366 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:40,372 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:44,909 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:44,919 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:45,616 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:47:45,622 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:50,138 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:47:50,152 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:50,837 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:47:50,850 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:55,388 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:47:55,401 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:47:56,049 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:47:56,055 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:00,631 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:48:00,643 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:01,299 ERROR network_monitor Error getting connection stats: (pid=65403)
+2026-02-04 04:48:01,319 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:05,828 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:48:05,916 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:06,569 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:48:06,578 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:11,124 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:48:11,138 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:11,799 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:48:11,815 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:16,360 ERROR network_monitor Error getting connection stats: (pid=66437)
+2026-02-04 04:48:16,374 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:17,077 ERROR network_monitor Error getting connection stats: (pid=66442)
+2026-02-04 04:48:17,110 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:21,599 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:48:21,620 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:22,400 ERROR network_monitor Error getting connection stats: (pid=65386)
+2026-02-04 04:48:22,470 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:26,928 ERROR network_monitor Error getting connection stats: (pid=66456)
+2026-02-04 04:48:26,951 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:27,689 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:27,708 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:32,535 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:32,614 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:32,950 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:32,971 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:37,797 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:37,822 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:38,153 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:38,167 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:43,271 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:43,283 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:43,429 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:43,447 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:48,531 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:48,555 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:48,780 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:48,789 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:53,818 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:53,855 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:54,036 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:54,057 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:59,150 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:59,173 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:48:59,271 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:48:59,290 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:04,781 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:04,790 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:04,917 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:04,945 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:10,136 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:10,145 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:10,219 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:10,227 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:15,352 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:15,373 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:15,422 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:15,447 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:20,788 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:20,800 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:20,810 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:20,818 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:26,019 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:26,019 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:26,033 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:26,036 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:31,290 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:31,290 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:31,310 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:31,311 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:36,616 ERROR network_monitor Error getting connection stats: (pid=66550)
+2026-02-04 04:49:36,630 ERROR network_monitor Error getting connection stats: (pid=66550)
+2026-02-04 04:49:36,646 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:36,654 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:42,237 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:42,245 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:42,246 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:42,261 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:47,483 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:47,490 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:47,493 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:47,509 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:52,720 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:52,736 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:52,736 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:52,760 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:57,987 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:57,997 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:49:58,003 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:49:58,014 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:03,229 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:03,235 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:03,245 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:03,247 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:08,482 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:08,491 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:08,501 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:08,513 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:13,772 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:13,782 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:13,782 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:13,793 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:19,015 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:19,033 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:19,035 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:19,064 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:24,300 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:24,311 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:24,321 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:24,331 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:29,538 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:29,547 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:29,568 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:29,578 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:34,739 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:34,762 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:34,764 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:34,781 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:40,074 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:40,079 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:40,090 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:40,090 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:45,314 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:45,323 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:45,324 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:45,334 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:50,539 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:50,547 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:50,549 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:50:50,564 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:55,789 ERROR network_monitor Error getting connection stats: (pid=66665)
+2026-02-04 04:50:55,799 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:50:55,805 ERROR network_monitor Error getting connection stats: (pid=66665)
+2026-02-04 04:50:55,818 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:01,037 ERROR network_monitor Error getting connection stats: (pid=66681)
+2026-02-04 04:51:01,040 ERROR network_monitor Error getting connection stats: (pid=66681)
+2026-02-04 04:51:01,064 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:01,070 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:06,321 ERROR network_monitor Error getting connection stats: (pid=66688)
+2026-02-04 04:51:06,334 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:06,340 ERROR network_monitor Error getting connection stats: (pid=66681)
+2026-02-04 04:51:06,360 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:11,693 ERROR network_monitor Error getting connection stats: (pid=66697)
+2026-02-04 04:51:11,702 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:11,707 ERROR network_monitor Error getting connection stats: (pid=66697)
+2026-02-04 04:51:11,723 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:16,923 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:16,933 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:16,943 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:16,961 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:22,171 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:22,177 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:22,202 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:22,215 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:27,429 ERROR network_monitor Error getting connection stats: (pid=66720)
+2026-02-04 04:51:27,447 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:27,460 ERROR network_monitor Error getting connection stats: (pid=66720)
+2026-02-04 04:51:27,509 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:32,722 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:32,733 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:32,740 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:32,770 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:37,996 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:38,013 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:38,025 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:38,040 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:43,242 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:43,255 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:43,261 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:43,267 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:48,469 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:48,469 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:48,478 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:48,479 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:53,709 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:53,709 ERROR network_monitor Error getting connection stats: (pid=66695)
+2026-02-04 04:51:53,720 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:53,720 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:58,970 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:51:58,988 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:51:59,052 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:51:59,135 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:04,239 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:04,246 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:04,359 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:04,374 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:09,466 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:09,476 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:09,606 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:09,617 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:14,643 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:14,654 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:14,826 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:14,836 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:19,865 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:19,873 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:20,065 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:20,074 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:25,040 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:25,049 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:25,353 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:25,373 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:30,259 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:30,269 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:30,586 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:30,598 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:35,523 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:35,554 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:35,838 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:35,868 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:40,817 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:40,835 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:41,176 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:41,185 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:46,071 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:46,081 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:46,375 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:46,394 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:51,272 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:51,286 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:51,671 ERROR network_monitor Error getting connection stats: (pid=66832)
+2026-02-04 04:52:51,680 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:56,541 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:56,552 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:52:56,847 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:52:56,855 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:01,818 ERROR network_monitor Error getting connection stats: (pid=66845)
+2026-02-04 04:53:01,840 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:02,067 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:02,074 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:07,059 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:07,069 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:07,311 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:07,322 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:12,289 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:12,299 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:12,503 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:12,518 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:17,551 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:17,561 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:17,759 ERROR network_monitor Error getting connection stats: (pid=66875)
+2026-02-04 04:53:17,780 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:22,840 ERROR network_monitor Error getting connection stats: (pid=66881)
+2026-02-04 04:53:22,853 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:22,982 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:22,999 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:28,077 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:28,086 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:28,263 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:28,279 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:33,344 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:33,366 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:33,570 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:33,585 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:38,625 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:38,635 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:38,988 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:38,998 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:43,891 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:43,902 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:44,302 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:44,316 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:49,144 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:49,171 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:49,593 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:49,620 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:54,390 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:54,399 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:54,859 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:54,871 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:53:59,625 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:53:59,644 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:00,076 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:00,085 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:04,950 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:04,960 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:05,451 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:05,477 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:10,290 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:10,300 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:10,757 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:10,772 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:15,562 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:15,573 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:15,992 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:16,008 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:20,779 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:20,790 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:21,288 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:21,298 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:25,990 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:25,999 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:26,525 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:26,544 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:31,252 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:31,275 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:31,860 ERROR network_monitor Error getting connection stats: (pid=66972)
+2026-02-04 04:54:31,887 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:36,558 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:36,570 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:37,203 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:37,228 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:41,918 ERROR network_monitor Error getting connection stats: (pid=66984)
+2026-02-04 04:54:41,928 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:42,534 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:42,546 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:47,191 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:47,203 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:47,742 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:47,769 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:52,409 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:52,421 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:52,978 ERROR network_monitor Error getting connection stats: (pid=67000)
+2026-02-04 04:54:52,999 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:57,660 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:57,672 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:54:58,221 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:54:58,235 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:02,910 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:03,063 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:03,439 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:03,457 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:08,403 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:08,417 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:08,645 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:08,668 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:13,662 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:13,681 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:13,892 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:13,927 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:19,034 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:19,043 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:19,142 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:19,155 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:24,292 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:24,300 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:24,385 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:24,395 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:29,544 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:29,570 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:29,643 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:29,654 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:34,823 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:34,885 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:34,887 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:34,909 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:40,360 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:40,394 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:40,444 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:40,459 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:45,789 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:45,799 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:45,813 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:45,816 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:51,053 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:51,054 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:51,079 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:51,079 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:56,376 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:56,378 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:55:56,389 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:55:56,395 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:01,663 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:01,674 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:01,678 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:01,693 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:07,008 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:07,031 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:07,036 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:07,111 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:12,443 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:12,481 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:12,484 ERROR network_monitor Error getting connection stats: (pid=67103)
+2026-02-04 04:56:12,514 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:17,856 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:17,866 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:17,886 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:17,912 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:23,187 ERROR network_monitor Error getting connection stats: (pid=67118)
+2026-02-04 04:56:23,212 ERROR network_monitor Error getting connection stats: (pid=67118)
+2026-02-04 04:56:23,226 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:23,238 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:28,586 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:28,595 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:28,602 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:28,613 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:33,903 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:33,914 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:33,961 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:33,976 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:39,222 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:39,240 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:39,260 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:39,293 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:44,628 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:44,639 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:44,655 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:44,670 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:49,994 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:50,007 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:50,014 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:50,030 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:55,404 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:55,404 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:56:55,418 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:56:55,419 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:00,686 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:00,687 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:00,702 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:00,704 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:06,061 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:06,076 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:06,079 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:06,096 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:11,465 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:11,477 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:11,480 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:11,488 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:16,736 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:16,746 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:16,752 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:16,759 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:22,009 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:22,013 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:22,027 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:22,029 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:27,486 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:27,489 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:27,514 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:27,518 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:32,816 ERROR network_monitor Error getting connection stats: (pid=67206)
+2026-02-04 04:57:32,819 ERROR network_monitor Error getting connection stats: (pid=67206)
+2026-02-04 04:57:32,839 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:32,842 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:38,112 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:38,113 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:38,125 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:38,126 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:43,461 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:43,465 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:57:43,491 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:43,503 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:48,937 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:57:48,946 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:57:48,947 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:48,964 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:54,260 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:57:54,291 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:57:54,298 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:54,345 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:57:59,962 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:57:59,985 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:00,022 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:58:00,044 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:05,308 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:58:05,329 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:05,370 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:58:05,383 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:10,580 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:58:10,592 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:10,630 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:58:10,646 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:15,892 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:58:15,909 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:15,954 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:58:15,975 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:21,239 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:58:21,249 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:21,270 ERROR network_monitor Error getting connection stats: (pid=67420)
+2026-02-04 04:58:21,287 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:26,623 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:26,633 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:26,664 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:26,682 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:31,889 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:31,898 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:31,949 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:31,981 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:37,229 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:37,381 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:37,384 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:37,405 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:43,110 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:43,123 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:43,141 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:43,141 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:48,493 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:48,508 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:48,510 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:48,536 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:53,771 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:53,795 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:53,795 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:53,818 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:59,121 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:59,121 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:58:59,141 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:58:59,146 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:04,724 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:04,733 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:04,744 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:04,753 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:10,107 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:10,129 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:10,132 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:10,148 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:15,396 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:15,406 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:15,408 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:15,417 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:20,780 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:20,782 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:20,793 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:20,799 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:26,140 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:26,146 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:26,159 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:26,163 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:31,440 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:31,451 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:31,512 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:31,539 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:36,774 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:36,806 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:36,839 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:36,850 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:42,208 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:42,233 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:42,267 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:42,333 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:47,689 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:47,707 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:47,724 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:47,798 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:52,999 ERROR network_monitor Error getting connection stats: (pid=68682)
+2026-02-04 04:59:53,024 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:53,400 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:53,411 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:58,285 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:58,300 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 04:59:58,673 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 04:59:58,683 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:03,530 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:03,551 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:03,975 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:04,009 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:08,734 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:08,748 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:09,340 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:09,349 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:14,007 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:14,022 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:14,807 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:14,817 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:19,284 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:19,298 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:20,081 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:20,091 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:24,631 ERROR network_monitor Error getting connection stats: (pid=68927)
+2026-02-04 05:00:24,644 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:25,347 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:25,365 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:29,855 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:29,866 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:30,612 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:30,635 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:35,180 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:35,272 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:36,078 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:36,089 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:40,664 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:40,683 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:41,223 INFO V-Player V-Player logging initialized successfully
+2026-02-04 05:00:41,225 INFO V-Player V-Player components initialized successfully
+2026-02-04 05:00:41,383 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:41,394 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:45,949 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:45,959 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:46,641 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:46,652 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:51,222 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:51,233 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:51,897 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:51,932 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:56,429 ERROR network_monitor Error getting connection stats: (pid=52664)
+2026-02-04 05:00:56,445 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:00:57,187 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:00:57,200 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:01,702 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:01,735 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:02,506 ERROR network_monitor Error getting connection stats: (pid=69372)
+2026-02-04 05:01:02,527 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:06,976 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:06,990 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:07,773 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:07,781 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:12,338 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:12,347 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:12,945 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:12,951 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:17,578 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:17,598 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:18,214 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:18,227 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:22,933 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:22,942 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:23,453 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:23,461 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:28,140 ERROR network_monitor Error getting connection stats: (pid=69959)
+2026-02-04 05:01:28,153 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:28,627 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:28,647 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:33,400 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:33,411 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:33,934 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:33,942 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:38,602 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:38,612 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
+2026-02-04 05:01:39,102 ERROR network_monitor Error getting connection stats: (pid=69305)
+2026-02-04 05:01:39,142 ERROR network_monitor Error getting system network info: [Errno 2] No such file or directory: 'ip'
