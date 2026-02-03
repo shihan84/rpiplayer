@@ -1,0 +1,36 @@
+[Unit]
+Description=V-Player Professional Streaming Solution
+Documentation=https://github.com/shihan84/rpiplayer
+After=network.target nginx.service
+Wants=network.target
+
+[Service]
+Type=simple
+User=rpiplayer
+Group=rpiplayer
+WorkingDirectory=/home/rpiplayer/v-player
+Environment=PYTHONPATH=/home/rpiplayer/v-player
+Environment=FLASK_ENV=production
+Environment=FLASK_APP=app.py
+ExecStart=/usr/bin/python3 app.py
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=v-player
+
+# Security settings
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/home/rpiplayer/v-player/logs /tmp
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

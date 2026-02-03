@@ -1,11 +1,27 @@
-from flask import Flask, render_template, request, jsonify
-from flask_socketio import SocketIO, emit
-import logging
+#!/usr/bin/env python3
+"""
+V-Player - Professional Streaming Solution
+by Itassist Broadcast Solutions
+
+Main Flask application for streaming media player with web interface.
+Supports SRT, RTMP, UDP, HLS, RTP protocols with hardware acceleration.
+"""
+
 import os
-import uuid
+import sys
+import logging
+import json
 import subprocess
+import time
 import psutil
-import socket
+import threading
+from datetime import datetime
+from pathlib import Path
+
+from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask_socketio import SocketIO, emit
+import socketio as socketio_client
+
 from config import Config
 from stream_decoder import StreamDecoder
 from network_monitor import NetworkMonitor
@@ -14,19 +30,38 @@ app = Flask(__name__)
 app.config.from_object(Config)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s %(name)s %(message)s',
-    handlers=[
-        logging.FileHandler('logs/rpiplayer.log'),
-        logging.StreamHandler()
-    ]
-)
+# Configure logging with comprehensive error handling
+try:
+    # Create logs directory if it doesn't exist
+    log_dir = Path('logs')
+    log_dir.mkdir(exist_ok=True)
+    
+    # Configure logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s %(levelname)s %(name)s %(message)s',
+        handlers=[
+            logging.FileHandler(log_dir / 'v-player.log'),
+            logging.StreamHandler(sys.stdout)
+        ]
+    )
+    
+    # Create specific logger for V-Player
+    logger = logging.getLogger('V-Player')
+    logger.info("V-Player logging initialized successfully")
+    
+except Exception as e:
+    print(f"ERROR: Failed to initialize logging: {e}")
+    sys.exit(1)
 
-# Initialize stream decoder and network monitor
-decoder = StreamDecoder()
-network_monitor = NetworkMonitor(socketio)
+# Initialize components with error handling
+try:
+    decoder = StreamDecoder()
+    network_monitor = NetworkMonitor(socketio)
+    logger.info("V-Player components initialized successfully")
+except Exception as e:
+    logger.error(f"Failed to initialize V-Player components: {e}")
+    sys.exit(1)
 
 @app.route('/')
 def index():
