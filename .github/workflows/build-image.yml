@@ -1,0 +1,167 @@
+name: Build RPI Player Image
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y python3-pip python3-venv git curl wget zip unzip kpartx qemu-utils parted dosfstools rsync xz-utils
+        
+    - name: Download Raspberry Pi OS Lite image
+      run: |
+        wget -O raspios_lite_arm64.img.xz "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2023-05-03/2023-05-03-raspios-bullseye-arm64-lite.img.xz"
+        xz -d raspios_lite_arm64.img.xz
+        mv raspios_lite_arm64.img rpi-player-base.img
+        
+    - name: Setup loop device and mount partitions
+      run: |
+        sudo losetup -fP rpi-player-base.img
+        LOOP_DEV=$(sudo losetup -j rpi-player-base.img | cut -d: -f1)
+        echo "LOOP_DEV=$LOOP_DEV" >> $GITHUB_ENV
+        sudo mkdir -p /mnt/boot
+        sudo mount ${LOOP_DEV}p1 /mnt/boot
+        sudo mkdir -p /mnt/root
+        sudo mount ${LOOP_DEV}p2 /mnt/root
+        
+    - name: Install RPI Player application
+      run: |
+        sudo chroot /mnt/root useradd -m -s /bin/bash rpiplayer
+        sudo chroot /mnt/root usermod -a -G video,audio,render,gpio,i2c,spi rpiplayer
+        sudo mkdir -p /mnt/root/home/rpiplayer/rpi-player
+        sudo mkdir -p /mnt/root/home/rpiplayer/rpi-player/{streams,logs,config}
+        sudo mkdir -p /mnt/root/home/rpiplayer/rpi-player/{templates,static/css,static/js}
+        sudo cp app.py /mnt/root/home/rpiplayer/rpi-player/
+        sudo cp config.py /mnt/root/home/rpiplayer/rpi-player/
+        sudo cp stream_decoder.py /mnt/root/home/rpiplayer/rpi-player/
+        sudo cp network_monitor.py /mnt/root/home/rpiplayer/rpi-player/
+        sudo cp requirements.txt /mnt/root/home/rpiplayer/rpi-player/
+        sudo cp -r templates/* /mnt/root/home/rpiplayer/rpi-player/templates/
+        sudo cp -r static/* /mnt/root/home/rpiplayer/rpi-player/static/
+        sudo mkdir -p /mnt/root/home/rpiplayer/rpi-player/scripts
+        sudo cp rpi-image/files/*.sh /mnt/root/home/rpiplayer/rpi-player/scripts/
+        sudo chmod +x /mnt/root/home/rpiplayer/rpi-player/scripts/*.sh
+        sudo chroot /mnt/root chown -R rpiplayer:rpiplayer /home/rpiplayer/rpi-player
+        
+    - name: Install Python dependencies
+      run: |
+        sudo chroot /mnt/root pip3 install --upgrade pip
+        sudo chroot /mnt/root pip3 install -r /home/rpiplayer/rpi-player/requirements.txt
+        
+    - name: Install system dependencies
+      run: |
+        sudo chroot /mnt/root apt-get update
+        sudo chroot /mnt/root apt-get install -y nginx ffmpeg hostapd dnsmasq wireless-tools iw ethtool net-tools iproute2 curl wget dnsutils iptables iputils-ping traceroute nmap tcpdump vnstat iftop nethogs bridge-utils vlan avahi-daemon avahi-utils v4l-utils libv4l-dev libdrm-dev libgbm-dev libgles2-mesa-dev libegl1-mesa-dev libasound2-dev libpulse-dev libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libxss-dev libxtst-dev libgtk-3-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-libav gstreamer1.0-tools omxplayer libomxil-bellagio-dev libilbc-dev libopus-dev libvpx-dev libx264-dev libx265-dev libfdk-aac-dev libmp3lame-dev libshine-dev libsrt-dev librtmp-dev libssl-dev libcurl4-openssl-dev
+        
+    - name: Configure system services
+      run: |
+        sudo chroot /mnt/root systemctl daemon-reload
+        sudo chroot /mnt/root systemctl enable ssh
+        sudo chroot /mnt/root systemctl enable nginx
+        
+    - name: Configure boot settings (disable splash)
+      run: |
+        sudo cp /mnt/boot/config.txt /mnt/boot/config.txt.backup
+        sudo cp rpi-image/files/config.txt /mnt/boot/config.txt
+        sudo cp /mnt/boot/cmdline.txt /mnt/boot/cmdline.txt.backup
+        echo "console=serial0,115200 console=tty1 root=PARTUUID=xxxxxxxx-02 rootfstype=ext4 fsck.repair=yes rootwait quiet logo.nologo splash=off loglevel=0" | sudo tee /mnt/boot/cmdline.txt
+        
+    - name: Configure SSH and user settings
+      run: |
+        sudo touch /mnt/boot/ssh
+        sudo chroot /mnt/root echo 'rpiplayer:rpiplayer123' | chpasswd
+        echo "rpiplayer ALL=(ALL) NOPASSWD:ALL" | sudo tee /mnt/root/etc/sudoers.d/rpiplayer
+        
+        echo '#!/bin/sh -e' | sudo tee /mnt/root/etc/rc.local
+        echo '/usr/bin/clear > /dev/tty1 2>&1 || true' | sudo tee -a /mnt/root/etc/rc.local
+        echo 'exit 0' | sudo tee -a /mnt/root/etc/rc.local
+        sudo chmod +x /mnt/root/etc/rc.local
+        
+    - name: Unmount partitions
+      run: |
+        sudo umount /mnt/boot || true
+        sudo umount /mnt/root || true
+        sudo losetup -d ${{ env.LOOP_DEV }} || true
+        
+    - name: Compress and create checksums
+      run: |
+        gzip -c rpi-player-base.img > rpi-player.img.gz
+        sha256sum rpi-player-base.img > rpi-player.img.sha256
+        sha256sum rpi-player.img.gz > rpi-player.img.gz.sha256
+        ls -lh rpi-player.img.gz
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: rpi-player-image
+        path: |
+          rpi-player.img.gz
+          rpi-player.img.sha256
+          rpi-player.img.gz.sha256
+        retention-days: 30
+        
+    - name: Create Release
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          rpi-player.img.gz
+          rpi-player.img.sha256
+          rpi-player.img.gz.sha256
+        name: RPI Player Image ${{ github.run_number }}
+        tag: v${{ github.run_number }}
+        draft: false
+        prerelease: false
+        body: |
+          Raspberry Pi 3 streaming player image with:
+          - SRT, RTMP, UDP stream support
+          - Hardware-accelerated video decoding
+          - Web-based GUI interface
+          - Broadcast video output options (HDMI, composite)
+          - Network management and monitoring
+          - WiFi hotspot functionality
+          - Auto-start service configuration
+          - Splash screen disabled for professional appearance
+          
+          ## Installation:
+          1. Download the `rpi-player.img.gz` file
+          2. Extract using: `gunzip rpi-player.img.gz`
+          3. Flash to SD card using Raspberry Pi Imager
+          4. Boot your Raspberry Pi 3
+          5. Access web interface at: `http://rpi-player.local:5000`
+          
+          ## Default Settings:
+          - SSH: Enabled (user: rpiplayer, password: rpiplayer123)
+          - Web Interface: http://localhost:5000
+          - Streams folder: /home/rpiplayer/rpi-player/streams
+          - Network: DHCP enabled, WiFi hotspot available
+          
+          ## Features:
+          - Professional boot (no splash screen)
+          - Hardware-accelerated video decoding
+          - Real-time network monitoring
+          - Mobile-friendly web interface
+          - Multiple video output options
+          - Automatic service startup
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

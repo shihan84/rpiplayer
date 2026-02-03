@@ -30,7 +30,7 @@ jobs:
   build-image:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
       
     steps:
@@ -48,8 +48,9 @@ jobs:
           coreutils quilt parted qemu-user-static debootstrap zerofree \
           zip dosfstools bsdtar libcap2-bin rsync xz-utils kpartx \
           git bc build-essential binutils-aarch64-linux-gnu \
-          device-tree-compiler raspberrypi-bootloader \
-          ca-certificates curl gnupg
+          device-tree-compiler \
+          ca-certificates curl gnupg \
+          python3-dev python3-pip
         
     - name: Clone pi-gen
       run: |
@@ -68,7 +69,7 @@ jobs:
         APT_PROXY=
         ENABLE_SSH=1
         ENABLE_NONFREE=1
-        ENABLE_MINIMAL=1
+        ENABLE_MINIMAL=0
         ENABLE_HEADLESS=0
         ENABLE_XORG=1
         ENABLE_WM=1
@@ -83,13 +84,15 @@ jobs:
         ENABLE_PI4=1
         ENABLE_PI400=1
         ENABLE_CM4=1
+        ENABLE_TOUCH=1
+        ENABLE_I2C=1
+        ENABLE_SPI=1
+        ENABLE_CAMERA=1
+        ENABLE_GPIO=1
+        ENABLE_HWLIB=1
+        ENABLE_64BIT=0
+        ENABLE_PI3_DTOVERLAY=1
         EOF
-        
-        # Set up stage customization
-        echo "IMG_NAME=rpi-player" >> config
-        echo "TARGET_BOOT_SIZE=256" >> config
-        echo "ENABLE_SSH=1" >> config
-        echo "ENABLE_NONFREE=1" >> config
         
     - name: Add RPI Player customization stages
       run: |
@@ -101,7 +104,14 @@ jobs:
         # Copy our customization scripts
         cp -r ../rpi-image/* stage-rpi-player/
         
-        # Create stage list
+        # Make scripts executable
+        chmod +x stage-rpi-player/00-rpi-player-config
+        chmod +x stage-rpi-player/01-ffmpeg-build
+        chmod +x stage-rpi-player/02-network-config
+        chmod +x stage-rpi-player/03-splash-config
+        chmod +x stage-rpi-player/files/*.sh
+        
+        # Create stage-list
         cat > stage-list << EOF
         stage0
         stage1
@@ -125,41 +135,29 @@ jobs:
         cd pi-gen/deploy
         
         # Find the built image
-        IMAGE_FILE=$(ls rpi-player*.img | head -1)
+        IMAGE_FILE=$(ls rpi-player*.img 2>/dev/null | head -1)
         
         if [ -n "$IMAGE_FILE" ]; then
-          # Resize image to optimal size for RPI3
           echo "Optimizing image for RPI3..."
           
-          # Add RPI3 specific optimizations
-          sudo mount -o loop,offset=$((512*8192)) "$IMAGE_FILE" /mnt || true
+          # Mount the boot partition
+          sudo mkdir -p /mnt/boot
+          sudo mount -o loop,offset=$((512*8192)) "$IMAGE_FILE" /mnt/boot || true
           
           # Add boot config optimizations
-          if [ -d /mnt ]; then
-            cat >> /mnt/config.txt << EOF
+          if [ -d /mnt/boot ]; then
+            # Backup original config
+            sudo cp /mnt/boot/config.txt /mnt/boot/config.txt.backup || true
             
-            # RPI3 Optimizations for Streaming
-            gpu_mem=256
-            hdmi_force_hotplug=1
-            hdmi_drive=2
-            config_hdmi_boost=4
-            disable_splash=1
-            avoid_warnings=1
-            max_framebuffers=1
-            disable_overscan=1
-            framebuffer_depth=32
-            framebuffer_ignore_alpha=1
+            # Copy our optimized config
+            sudo cp ../stage-rpi-player/files/config.txt /mnt/boot/config.txt || true
             
-            # Hardware acceleration
-            start_x=1
-            dtoverlay=vc4-kms-v3d
-            dtoverlay=vc4-fkms-v3d
+            # Copy cmdline.txt optimizations
+            if [ -f ../stage-rpi-player/files/cmdline.txt ]; then
+              sudo cp ../stage-rpi-player/files/cmdline.txt /mnt/boot/cmdline.txt || true
+            fi
             
-            # Audio
-            dtparam=audio=on
-            EOF
-            
-            sudo umount /mnt || true
+            sudo umount /mnt/boot || true
           fi
           
           # Compress the image
@@ -168,6 +166,9 @@ jobs:
           # Generate checksum
           sha256sum "$IMAGE_FILE" > "${IMAGE_FILE}.sha256"
           sha256sum "${IMAGE_FILE}.gz" > "${IMAGE_FILE}.gz.sha256"
+        else
+          echo "No image file found in deploy directory"
+          ls -la pi-gen/deploy/
         fi
         
     - name: Upload image artifacts
@@ -179,6 +180,7 @@ jobs:
           pi-gen/deploy/rpi-player*.img.gz
           pi-gen/deploy/rpi-player*.sha256
         retention-days: 30
+        if-no-files-found: warn
         
     - name: Create Release
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -197,7 +199,10 @@ jobs:
           - Hardware-accelerated video decoding
           - Web-based GUI interface
           - Broadcast video output options (HDMI, composite)
+          - Network management and monitoring
+          - WiFi hotspot functionality
           - Auto-start service configuration
+          - Splash screen disabled for professional appearance
           
           ## Installation:
           1. Download the `.img.gz` file
@@ -207,8 +212,19 @@ jobs:
           5. Access web interface at: `http://rpi-player.local:5000`
           
           ## Default Settings:
-          - SSH: Enabled (user: pi, password: raspberry)
+          - SSH: Enabled (user: rpiplayer, password: rpiplayer123)
           - Web Interface: http://localhost:5000
-          - Streams folder: /home/pi/rpi-player/streams
+          - Streams folder: /home/rpiplayer/rpi-player/streams
+          - Network: DHCP enabled, WiFi hotspot available
+          
+          ## Network Configuration:
+          - WiFi Client: Connect to existing networks via web interface
+          - WiFi Hotspot: SSID "RPI-Player", password "rpiplayer123"
+          - Ethernet: DHCP enabled
+          
+          ## Troubleshooting:
+          - Check logs: `sudo journalctl -u rpi-player -f`
+          - Network tools: `/home/rpiplayer/rpi-player/network-manager.sh`
+          - Video output: `/home/rpiplayer/rpi-player/video-output-selector.sh`
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
