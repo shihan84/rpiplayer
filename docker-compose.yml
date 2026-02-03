@@ -14,9 +14,19 @@ services:
       - PYTHONUNBUFFERED=1
       - HOST=0.0.0.0
       - PORT=5005
+      - PYTHONPATH=/app
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
     restart: unless-stopped
     networks:
       - vplayer-network
+    # Add health check for Codespaces
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5005/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   # Optional: Redis for caching (if needed in future)
   redis:

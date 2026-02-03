@@ -58,14 +58,8 @@
     }
   },
   "forwardPorts": [5005, 6379],
-  "postCreateCommand": {
-    "install": "pip install -r requirements.txt",
-    "setup": "python3 build_rpi_image.py",
-    "start": "python3 app.py"
-  },
-  "postStartCommand": {
-    "web": "python3 app.py"
-  },
+  "postCreateCommand": "pip install -r requirements.txt && python3 build_rpi_image.py",
+  "postStartCommand": "python3 app.py",
   "remoteUser": "root",
   "mounts": [
     "source=${localWorkspaceFolder}/logs,target=/app/logs,type=bind",
