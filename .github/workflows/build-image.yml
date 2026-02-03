@@ -75,26 +75,35 @@ jobs:
         
     - name: Configure system services
       run: |
+        # Create systemd service file using printf
+        sudo printf '%s\n' '[Unit]' 'Description=RPI Stream Player Service' 'After=network.target nginx.service' 'Wants=network.target' '' '[Service]' 'Type=simple' 'User=rpiplayer' 'Group=rpiplayer' 'WorkingDirectory=/home/rpiplayer/rpi-player' 'Environment=PYTHONPATH=/home/rpiplayer/rpi-player' 'Environment=FLASK_ENV=production' 'ExecStart=/usr/bin/python3 app.py' 'ExecReload=/bin/kill -HUP $MAINPID' 'KillMode=mixed' 'TimeoutStopSec=5' 'PrivateTmp=true' 'Restart=always' 'RestartSec=10' '' '[Install]' 'WantedBy=multi-user.target' > /mnt/root/etc/systemd/system/rpi-player.service
+        
+        # Create nginx configuration using printf
+        sudo printf '%s\n' 'server {' '    listen 80;' '    server_name _;' '' '    location /static/ {' '        alias /home/rpiplayer/rpi-player/static/;' '        expires 1y;' '        add_header Cache-Control "public, immutable";' '    }' '' '    location / {' '        proxy_pass http://127.0.0.1:5000;' '        proxy_set_header Host $host;' '        proxy_set_header X-Real-IP $remote_addr;' '        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;' '        proxy_set_header X-Forwarded-Proto $scheme;' '        proxy_redirect off;' '' '        proxy_http_version 1.1;' '        proxy_set_header Upgrade $http_upgrade;' '        proxy_set_header Connection "upgrade";' '        proxy_set_header Origin "";' '    }' '' '    location /streams/ {' '        alias /tmp/;' '        add_header Cache-Control no-cache;' '        add_header "Access-Control-Allow-Origin" "*";' '        add_header "Access-Control-Allow-Methods" "GET, POST, OPTIONS";' '        add_header "Access-Control-Allow-Headers" "Range";' '    }' '}' > /mnt/root/etc/nginx/sites-available/rpi-player
+        
         sudo chroot /mnt/root systemctl daemon-reload
+        sudo chroot /mnt/root systemctl enable rpi-player.service
         sudo chroot /mnt/root systemctl enable ssh
         sudo chroot /mnt/root systemctl enable nginx
+        sudo chroot /mnt/root rm -f /etc/nginx/sites-enabled/default
+        sudo chroot /mnt/root ln -s /etc/nginx/sites-available/rpi-player /etc/nginx/sites-enabled/
         
     - name: Configure boot settings (disable splash)
       run: |
         sudo cp /mnt/boot/config.txt /mnt/boot/config.txt.backup
         sudo cp rpi-image/files/config.txt /mnt/boot/config.txt
         sudo cp /mnt/boot/cmdline.txt /mnt/boot/cmdline.txt.backup
-        echo "console=serial0,115200 console=tty1 root=PARTUUID=xxxxxxxx-02 rootfstype=ext4 fsck.repair=yes rootwait quiet logo.nologo splash=off loglevel=0" | sudo tee /mnt/boot/cmdline.txt
+        printf 'console=serial0,115200 console=tty1 root=PARTUUID=xxxxxxxx-02 rootfstype=ext4 fsck.repair=yes rootwait quiet logo.nologo splash=off loglevel=0' | sudo tee /mnt/boot/cmdline.txt
         
     - name: Configure SSH and user settings
       run: |
         sudo touch /mnt/boot/ssh
         sudo chroot /mnt/root echo 'rpiplayer:rpiplayer123' | chpasswd
-        echo "rpiplayer ALL=(ALL) NOPASSWD:ALL" | sudo tee /mnt/root/etc/sudoers.d/rpiplayer
+        printf 'rpiplayer ALL=(ALL) NOPASSWD:ALL' | sudo tee /mnt/root/etc/sudoers.d/rpiplayer
         
-        echo '#!/bin/sh -e' | sudo tee /mnt/root/etc/rc.local
-        echo '/usr/bin/clear > /dev/tty1 2>&1 || true' | sudo tee -a /mnt/root/etc/rc.local
-        echo 'exit 0' | sudo tee -a /mnt/root/etc/rc.local
+        printf '#!/bin/sh -e\n' | sudo tee /mnt/root/etc/rc.local
+        printf '/usr/bin/clear > /dev/tty1 2>&1 || true\n' | sudo tee -a /mnt/root/etc/rc.local
+        printf 'exit 0\n' | sudo tee -a /mnt/root/etc/rc.local
         sudo chmod +x /mnt/root/etc/rc.local
         
     - name: Unmount partitions
@@ -111,7 +120,7 @@ jobs:
         ls -lh rpi-player.img.gz
         
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: rpi-player-image
         path: |
@@ -129,7 +138,7 @@ jobs:
           rpi-player.img.sha256
           rpi-player.img.gz.sha256
         name: RPI Player Image ${{ github.run_number }}
-        tag: v${{ github.run_number }}
+        tag_name: v${{ github.run_number }}
         draft: false
         prerelease: false
         body: |
