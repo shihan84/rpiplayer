@@ -413,9 +413,9 @@ ITAssist Broadcast Solutions is a leading provider of professional broadcasting 
 - Professional broadcasting equipment
 - Technical support and consulting
 
-**Website**: https://itassistbroadcast.com  
-**Email**: support@itassistbroadcast.com  
-**Phone**: +1-555-VPLAYER (8752937)
+**Website**: https://itassist.co.in
+**Email**: support@itassist.c.in
+**Phone**: +918686345954
 
 ---
 
