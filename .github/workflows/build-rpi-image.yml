@@ -2,15 +2,27 @@ name: Build Raspberry Pi Image
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
+    paths:
+      - 'app.py'
+      - 'requirements.txt'
+      - 'Dockerfile'
+      - 'build_rpi_image.py'
+      - '.github/workflows/build-rpi-image.yml'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'app.py'
+      - 'requirements.txt'
+      - 'Dockerfile'
+      - 'build_rpi_image.py'
+      - '.github/workflows/build-rpi-image.yml'
   workflow_dispatch:
     inputs:
       rpi_model:
         description: 'Raspberry Pi Model'
         required: true
-        default: 'rpi3'
+        default: 'rpi4'
         type: choice
         options:
         - rpi3
