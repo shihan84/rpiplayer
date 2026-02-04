@@ -5,3 +5,19 @@ eventlet==0.33.3
 psutil==5.9.5
 requests==2.31.0
 PyYAML==6.0.1
+
+# Telegram Integration
+python-telegram-bot==20.7
+python-telegram-bot-calendar==1.0.5
+
+# Licensing System
+cryptography==41.0.7
+pycryptodome==3.19.0
+
+# Quality Management
+opencv-python==4.8.1.78
+pillow==10.1.0
+
+# Additional utilities
+schedule==1.2.0
+apscheduler==3.10.4
