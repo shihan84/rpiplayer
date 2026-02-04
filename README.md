@@ -24,24 +24,24 @@ A comprehensive Raspberry Pi 3 streaming player with web GUI that supports multi
 - **Enterprise-grade security**
 - **Perfect for large deployments**
 
-## � Screenshots
+## 📸 Screenshots
 
 ### V-Player Enterprise Dashboard
 
 #### Main Interface
-![Dashboard Overview](screenshots/Screenshot%202026-02-04%20at%203.59.59%20AM.png)
+![Dashboard Overview](screenshots/001.png)
 
 #### Stream Configuration
-![Stream Configuration](screenshots/Screenshot%202026-02-04%20at%204.00.20%20AM.png)
+![Stream Configuration](screenshots/002.png)
 
 #### Network Settings
-![Network Settings](screenshots/Screenshot%202026-02-04%20at%204.00.30%20AM.png)
+![Network Settings](screenshots/003.png)
 
 #### Output Configuration
-![Output Configuration](screenshots/Screenshot%202026-02-04%20at%204.00.35%20AM.png)
+![Output Configuration](screenshots/004.png)
 
 #### System Monitoring
-![System Monitoring](screenshots/Screenshot%202026-02-04%20at%204.00.39%20AM.png)
+![System Monitoring](screenshots/005.png)
 
 ## �🚀 Quick Start
 
