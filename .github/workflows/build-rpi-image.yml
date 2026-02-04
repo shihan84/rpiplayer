@@ -9,6 +9,9 @@ on:
       - 'Dockerfile'
       - 'build_rpi_image.py'
       - '.github/workflows/build-rpi-image.yml'
+      - 'templates/**'
+      - 'static/**'
+      - 'config.py'
   pull_request:
     branches: [ main ]
     paths:
@@ -17,6 +20,9 @@ on:
       - 'Dockerfile'
       - 'build_rpi_image.py'
       - '.github/workflows/build-rpi-image.yml'
+      - 'templates/**'
+      - 'static/**'
+      - 'config.py'
   workflow_dispatch:
     inputs:
       rpi_model:
