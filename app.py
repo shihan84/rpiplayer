@@ -1,26 +1,30 @@
 #!/usr/bin/env python3
 """
-V-Player - Professional Streaming Solution
-by Itassist Broadcast Solutions
+V-Player Enterprise - Professional Streaming Solution
+
+Copyright © 2026 ITAssist Broadcast Solutions
+All rights reserved.
+
+This file is part of V-Player Enterprise and is licensed under the MIT License.
+See the LICENSE file for more information.
 
 Main Flask application for streaming media player with web interface.
-Supports SRT, RTMP, UDP, HLS, RTP protocols with hardware acceleration.
 """
 
 import os
 import sys
-import logging
-import json
-import subprocess
 import time
+import json
 import psutil
-import threading
+import socket
+import subprocess
+import logging
 from datetime import datetime
 from pathlib import Path
 
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask_socketio import SocketIO, emit
-import socketio as socketio_client
+import eventletio as socketio_client
 
 from config import Config
 from stream_decoder import StreamDecoder

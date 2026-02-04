@@ -43,7 +43,14 @@ A comprehensive Raspberry Pi 3 streaming player with web GUI that supports multi
 #### System Monitoring
 ![System Monitoring](screenshots/005.png)
 
-## �🚀 Quick Start
+## 📚 Documentation
+
+- **[Usage Documentation](USAGE.md)** - Comprehensive usage guide
+- **[Installation Guide](#-quick-start)** - Quick setup instructions
+- **[API Reference](USAGE.md#api-reference)** - REST API and WebSocket documentation
+- **[Troubleshooting](USAGE.md#troubleshooting)** - Common issues and solutions
+
+## 🚀 Quick Start
 
 ### Option 1: Choose Edition (Recommended)
 ```bash
@@ -375,26 +382,42 @@ v-player/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+Copyright © 2026 ITAssist Broadcast Solutions. All rights reserved.
+
 ## Support
 
+- **Documentation**: [USAGE.md](USAGE.md) - Comprehensive usage guide
 - **Issues**: [GitHub Issues](https://github.com/shihan84/rpiplayer/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/shihan84/rpiplayer/discussions)
 - **Wiki**: [Project Wiki](https://github.com/shihan84/rpiplayer/wiki)
+- **Email**: support@itassistbroadcast.com
 
 ## About V-Player
 
-V-Player is a professional streaming solution developed by **Itassist Broadcast Solutions**, designed specifically for Raspberry Pi 3 hardware. It provides enterprise-grade streaming capabilities with a modern web interface, making it ideal for professional broadcasting applications.
+V-Player is a professional streaming solution developed by **ITAssist Broadcast Solutions**, designed specifically for Raspberry Pi hardware. It provides enterprise-grade streaming capabilities with a modern web interface, making it ideal for professional broadcasting applications.
 
 ### Key Features:
 - **Professional Branding**: Clean, modern interface with V-Player branding
-- **Hardware Optimized**: Specifically tuned for Raspberry Pi 3 performance
+- **Hardware Optimized**: Specifically tuned for Raspberry Pi performance
 - **Broadcast Ready**: Multiple output options for professional use
 - **Network Management**: Comprehensive network configuration and monitoring
 - **Easy Deployment**: Automated image building and installation
+- **Enterprise Security**: Cloudflare Zero Trust integration
+- **Professional Support**: Commercial support available
 
-### Itassist Broadcast Solutions
-Itassist Broadcast Solutions is a leading provider of professional broadcasting and streaming solutions, specializing in hardware-optimized media players and network management systems.
+### ITAssist Broadcast Solutions
+ITAssist Broadcast Solutions is a leading provider of professional broadcasting and streaming solutions, specializing in:
+- Hardware-optimized media players
+- Network management systems
+- Enterprise streaming solutions
+- Professional broadcasting equipment
+- Technical support and consulting
+
+**Website**: https://itassistbroadcast.com  
+**Email**: support@itassistbroadcast.com  
+**Phone**: +1-555-VPLAYER (8752937)
 
 ---
 
-**V-Player - Professional Streaming Solution by Itassist Broadcast Solutions**
+**V-Player Enterprise - Professional Streaming Solution**  
+**Copyright © 2026 ITAssist Broadcast Solutions**
