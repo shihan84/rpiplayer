@@ -2,6 +2,9 @@
 """
 V-Player Enterprise Raspberry Pi Image Builder
 Creates a complete Raspberry Pi OS image with V-Player Enterprise pre-installed
+
+Updated: 2026-02-08
+Includes: Documentation, licensing framework, Telegram integration, quality management
 """
 
 import os
